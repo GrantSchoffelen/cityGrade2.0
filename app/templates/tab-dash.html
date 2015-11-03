@@ -1,12 +1,13 @@
-<ion-view view-title="Dashboard">
+<ion-view view-title="Grades">
   <ion-content class="padding">
     <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
-      <div class="item item-body" ng-repeat = "restaurant in restaurants">
-        <div>
-          {{restaurant.value.name}}
-        </div>
-        <div ng-repeat="violation in restaurant.data"><li>{{violation.violation_description}}</li></div>
+      <div class="item item-body" ng-repeat = "restaurant in restaurants | orderBy: '-data.length'">
+        
+          <h2>{{restaurant.value.name}}</h2>
+       
+        <div ng-repeat="violation in restaurant.data | orderBy: '-inspection_date'">
+
+          {{violation.inspection_date | date: 'mediumDate'}}<li>{{violation.violation_description}}</li></div>
       </div>
     </div>
   </ion-content>

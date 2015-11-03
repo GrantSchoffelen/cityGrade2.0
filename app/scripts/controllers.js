@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope, nycHealth, $rootScope, $cordovaGeolocation, ngGPlacesAPI,$http) {
+.controller('GradesCtrl', function($scope, nycHealth, $rootScope, $cordovaGeolocation, ngGPlacesAPI,$http) {
      $rootScope.dataArray = [];
         //set the default options for the ngPlacesApi
       
@@ -19,16 +19,12 @@ angular.module('starter.controllers', [])
                 }).then(
                     function(data) {
                         $rootScope.nearbyRes = data;
-                       var processedArray = [];
-            var resName;
-            var number = [];
-            var resStreetNum;
-            var boro
-            var cityOpenDataUrl = 'https://data.cityofnewyork.us/resource/9w7m-hzhe.json?dba='
-            var borugh = '&boro='
-                var cityOpenDataUrl = 'https://data.cityofnewyork.us/resource/9w7m-hzhe.json?phone='
-                var borugh = '&boro='
-                             data.forEach(function(value, key) {
+                        var processedArray = [], 
+                            cityOpenDataUrl = 'https://data.cityofnewyork.us/resource/9w7m-hzhe.json?dba=', 
+                            borugh = '&boro=', 
+                            cityOpenDataUrl = 'https://data.cityofnewyork.us/resource/9w7m-hzhe.json?phone=', 
+                            borugh = '&boro='; 
+                data.forEach(function(value, key) {
                     var getPhoneNumers = ngGPlacesAPI.placeDetails({
                         reference: value.reference
                     }).then(
@@ -63,7 +59,7 @@ angular.module('starter.controllers', [])
         var watchOptions = {
             frequency: 1000,
             timeout: 3000,
-            enableHighAccuracy: false // may cause errors if true
+            enableHighAccuracy: false
         };
 
         var watch = $cordovaGeolocation.watchPosition(watchOptions);
@@ -81,27 +77,3 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
-})
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
-
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
-});
