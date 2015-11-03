@@ -5,7 +5,7 @@ angular.module('starter.controllers', [])
         //set the default options for the ngPlacesApi
       
         var posOptions = {
-            timeout: 10000,
+            timeout: 30000,
             enableHighAccuracy: false
         };
         $cordovaGeolocation
@@ -52,6 +52,7 @@ angular.module('starter.controllers', [])
             })
                     });
             }, function(err) {
+                console.log(err)
                 alert('Seems like your location settings are turned off. Please check your location setting!')
                     // error
             });
