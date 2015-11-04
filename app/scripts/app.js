@@ -8,20 +8,20 @@
 angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', 'ngCordova', 'ngGPlaces'])
 
 .run(function($ionicPlatform, $cordovaGeolocation, $rootScope, $http, nycHealth) {
-    $ionicPlatform.ready(function() {
+  $ionicPlatform.ready(function() {
 
-        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-        // for form inputs)
-        if (window.cordova && window.cordova.plugins.Keyboard) {
-            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-            cordova.plugins.Keyboard.disableScroll(true);
+    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+    // for form inputs)
+    if (window.cordova && window.cordova.plugins.Keyboard) {
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      cordova.plugins.Keyboard.disableScroll(true);
 
-        }
-        if (window.StatusBar) {
-            // org.apache.cordova.statusbar required
-            StatusBar.styleDefault();
-        }
-    });
+    }
+    if (window.StatusBar) {
+      // org.apache.cordova.statusbar required
+      StatusBar.styleDefault();
+    }
+  });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -48,7 +48,13 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
         templateUrl: 'templates/tab-dash.html',
         controller: 'GradesCtrl'
       }
-    }
+    } //,
+    // resolve: {
+    //   message: function(nycHealth) {
+    //     console.log(nycHealth.init());
+    //     return nycHealth.init()
+    //   }
+    // }
   })
 
   // .state('tab.chats', {
