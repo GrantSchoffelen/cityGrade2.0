@@ -12,14 +12,13 @@ angular.module('starter.services', [])
       phoneNumber = phoneNumber.replace(/\-/g, '');
       var getUrl = cityOpenDataUrl + phoneNumber;
       var resDat;
-    return $http.get(getUrl)
+      return $http.get(getUrl)
         .then(function(dat) {
           console.log(dat);
-        return dat.data;
+          return dat.data;
         }).catch(function(err) {
           console.log(err);
-        }).finally(function () {
-        })
+        }).finally(function() {})
 
       // var googleapisKey = '&key=AIzaSyAH_IyMyerV407ZCEa29Kq7ciIysSwrRSE';
       // var reverseGeocodeApli = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='
@@ -54,9 +53,25 @@ angular.module('starter.services', [])
       // })
     },
     localRestraunts: function(lat, long) {
+      var defaults = {
+        radius: 30000,
+        sensor: false,
+        latitude: null,
+        longitude: null,
+        types: ['food'],
+        map: null,
+        elem: null,
+        nearbySearchKeys: ['name', 'reference', 'vicinity'],
+        placeDetailsKeys: ['formatted_address', 'formatted_phone_number',
+          'reference', 'website'
+        ],
+        nearbySearchErr: 'Unable to find nearby places',
+        placeDetailsErr: 'Unable to find place details',
+      };
       return ngGPlacesAPI.nearbySearch({
         latitude: lat,
-        longitude: long
+        longitude: long,
+        defaults: defaults
       }).then(function(restMin) {
         return restMin;
       }).catch(function(response) {
@@ -65,28 +80,30 @@ angular.module('starter.services', [])
       return restaurantsArr;
     },
     localRestrauntsMoreInfo: function(restaurant) {
-      return ngGPlacesAPI.placeDetails({
-        reference: restaurant.reference
-      }).then(function(el) {
-        return el;
-      });
-    } //,
-    // init: function () {
-    //   debugger
-    //   var restaurantsArr =[]
-    //   $cordovaGeolocation
-    //     .getCurrentPosition(posOptions)
-    //     .then(function(position) {
-    //       nycHealth.localRestrauntsposition.coords.latitude, position.coords.longitude).then(function (rests) {
-    //         angular.forEach(rests, function (key, val) {
-    //           nycHealth.localRestrauntsMoreInfo(key).then(function (rest) {
-    //               restaurantsArr.push(rest);
-    //           });
-    //         });
-    //         return restaurantsArr;
-    //       })
-    //     })
-    // }
+        return ngGPlacesAPI.placeDetails({
+          reference: restaurant.reference
+        }).then(function(el) {
+          console.log(el);
+
+          return el;
+        });
+      } //,
+      // init: function () {
+      //   debugger
+      //   var restaurantsArr =[]
+      //   $cordovaGeolocation
+      //     .getCurrentPosition(posOptions)
+      //     .then(function(position) {
+      //       nycHealth.localRestrauntsposition.coords.latitude, position.coords.longitude).then(function (rests) {
+      //         angular.forEach(rests, function (key, val) {
+      //           nycHealth.localRestrauntsMoreInfo(key).then(function (rest) {
+      //               restaurantsArr.push(rest);
+      //           });
+      //         });
+      //         return restaurantsArr;
+      //       })
+      //     })
+      // }
 
   }
 })

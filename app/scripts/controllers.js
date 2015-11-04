@@ -18,8 +18,11 @@ angular.module('starter.controllers', [])
         angular.forEach(rests, function (key, val) {
           nycHealth.localRestrauntsMoreInfo(key).then(function (rest) {
               nycHealth.healthData(rest).then(function (grade) {
-                $scope.restaurantsArr.push({restaurantInfo: key, gradeInfo: grade});
+                $scope.restaurantsArr.push({restaurantInfo: rest, gradeInfo: grade});
                 console.log($scope.restaurantsArr);
+              //  if((arr.length-1) === val) {
+                  //resolve
+              //  }
               })
           });
         });
