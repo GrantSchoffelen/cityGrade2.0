@@ -1,13 +1,23 @@
 <ion-view view-title="City Grade">
   <ion-nav-bar class="bar-stable">
-      <ion-nav-buttons side="right" >
-        <span class='ion-ios-search' ng-click="openFilter()">Filter</span>
-      </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+      <span class='ion-ios-search' ng-click="openFilter()">Filter</span>
+    </ion-nav-buttons>
   </ion-nav-bar>
   <ion-content class="padding">
-    <div class="list card">
-      <div class="item item-body" ng-if="restaurant.length !== 0" ng-repeat = "restaurant in restaurantsArr | orderBy: 'length'" ng-click="openSingleRestaurant(restaurant)">
-        <h2>{{restaurant[0].dba}}</h2>
+    <div>
+      <div class="item item-text-wrap md-whiteframe-5dp" layout="row" ng-click="openSingleRestaurant(restaurant)" ng-if="restaurant.length !== 0" ng-repeat="restaurant in restaurantsArr | orderBy: 'length'"style=" padding: 0;margin-bottom: 1%;margin-top: 2%;">
+        <div class="col col-50" style="padding: 3%;">
+          <h3>{{restaurant[0].dba}}</h3>
+          <h4>{{restaurant[0].phone}}</h4>
+          <h4>{{restaurant[0].cuisine_description}}</h4>
+        </div>
+        <div class="col col-50">
+          <img ng-if="restaurant[0].score < 13" ng-src="images/A.jpeg" style="float:right;height: 5em;">
+          <img ng-if="restaurant[0].score > 14 && restaurant[0].score < 27" ng-src="images/B.jpg" style="float:right;height: 5em;">
+          <img ng-if="restaurant[0].score > 28" ng-src="images/C.jpg" style="float:right;height: 5em;">
+          <img ng-if="!restaurant[0].score" ng-src="images/pending.jpg" style="float:right;height: 5em;">
+        </div>
       </div>
     </div>
   </ion-content>

@@ -13,6 +13,7 @@ angular.module('starter.services', [])
       var resDat;
       return $http.get(getUrl)
         .then(function(dat) {
+          console.log(dat.data, 'by phone')
           return dat.data;
         }).catch(function(err) {
           console.log(err);
@@ -23,11 +24,13 @@ angular.module('starter.services', [])
       var url ='https://data.cityofnewyork.us/resource/9w7m-hzhe.json?zipcode='+zipcode+'&cuisine_description='+cuisine;
       return $http.get(url)
         .then(function(dat) {
+          console.log(dat.data, 'by zip')
+
           return dat.data;
         }).catch(function(err) {
           console.log(err);
         }).finally(function() {})
-    }, 
+    },
 
     localRestraunts: function(lat, long) {
       var defaults = {
@@ -61,6 +64,6 @@ angular.module('starter.services', [])
         }).then(function(el) {
           return el;
         });
-      } 
+      }
   }
 })

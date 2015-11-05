@@ -8,8 +8,9 @@
 	  </div>
 	</ion-header-bar>
   <ion-content class="padding">
-    <div class="list card" ng-repeat="cuisine in cuisines" ng-click="getLocationsByCuisine(cuisine)">
-    	{{cuisine}}
-    </div>
+    <md-card  ng-repeat="cuisine in cuisines" ng-click="getLocationsByCuisine(cuisine)">
+    	<h5>{{cuisine}}</h5>
+			<img ng-src="images/{{cuisine}}.jpeg">
+    </md-card>
   </ion-content>
 </ion-modal-view>
