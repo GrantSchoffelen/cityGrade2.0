@@ -1,9 +1,9 @@
 <ion-view view-title="City Grade">
   <ion-content class="padding">
     <div class="list card">
-      <div class="item item-body" ng-if="gradeInfo.length !== 0" ng-repeat = "restaurant in restaurantsArr | orderBy: '-gradeInfo.length'">
-        <h2>{{restaurant.restaurantInfo.name}}</h2>
-        <div ng-repeat="violation in restaurant.gradeInfo | orderBy: '-inspection_date'">
+      <div class="item item-body" ng-if="restaurant.length !== 0" ng-repeat = "restaurant in restaurantsArr | orderBy: 'length'">
+        <h2>{{restaurant[0].dba}}</h2>
+        <div ng-repeat="violation in restaurant | orderBy: '-inspection_date'">
           {{violation.inspection_date | date: 'mediumDate'}}
           <li>{{violation.violation_description}}</li>
        </div>

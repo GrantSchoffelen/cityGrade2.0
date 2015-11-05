@@ -48,13 +48,25 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
         templateUrl: 'templates/tab-dash.html',
         controller: 'GradesCtrl'
       }
-    } //,
+    }
+
+     //,
     // resolve: {
     //   message: function(nycHealth) {
     //     console.log(nycHealth.init());
     //     return nycHealth.init()
     //   }
     // }
+  })
+
+  .state('tab.filter', {
+    url: '/filter',
+    views: {
+      'tab-filter': {
+        templateUrl: 'templates/tab-filter.html',
+        controller: 'GradesCtrl'
+      }
+    }
   })
 
   // .state('tab.chats', {

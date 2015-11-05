@@ -2,6 +2,9 @@ angular.module('starter.controllers', [])
 
 .controller('GradesCtrl', function($scope, nycHealth, $rootScope, $cordovaGeolocation, ngGPlacesAPI, $http) {
   $rootScope.dataArray = [];
+  if(!$rootScope.userZipcode){
+    $rootScope.userZipcode = null
+  }; 
   $scope.restaurantsArr = [];
   //set the default options for the ngPlacesApi
 
@@ -17,12 +20,11 @@ angular.module('starter.controllers', [])
       nycHealth.localRestraunts($rootScope.lat, $rootScope.long).then(function (rests) {
         angular.forEach(rests, function (key, val) {
           nycHealth.localRestrauntsMoreInfo(key).then(function (rest) {
-              nycHealth.healthData(rest).then(function (grade) {
-                $scope.restaurantsArr.push({restaurantInfo: rest, gradeInfo: grade});
-                console.log($scope.restaurantsArr);
-              //  if((arr.length-1) === val) {
-                  //resolve
-              //  }
+              if(!$rootScope.userZipcode){
+                $rootScope.userZipcode = rest.formatted_address.match(/[0-9]{5}/g); 
+              }
+              nycHealth.healthDataByPhone(rest).then(function (grade) {
+                $scope.restaurantsArr.push(grade);
               })
           });
         });
@@ -32,6 +34,24 @@ angular.module('starter.controllers', [])
       alert('Seems like your location settings are turned off. Please check your location setting!')
         // error
     });
+
+     $scope.cuisines = ['Thai', 'Bakery', 'American', 'Jewish/Kosher', 'Delicatessen', 'Chinese', 'Hotdog', 'Ice Cream, Gelato, Yogurt, Ices', 'Chicken', 'Turkish', 'Carribbean', 'Donuts', 'Sandwiches/Salads/Mixed Buffet', 'Hamburgers']
+
+  $scope.getLocationsByCuisine = function(cuisine){
+    $scope.reload = false;
+    $scope.restaurantsArr = []; 
+    nycHealth.healthDataByCuisine(cuisine, $rootScope.userZipcode).then(function(grade){
+$scope.restaurantsArr = grade
+
+           setTimeout(function () {
+        $scope.$apply(function () {
+          $scope.restaurantsArr = grade
+        });
+    }, 2000);
+
+          // $scope.$digest(); 
+    })
+  }
 
   var watchOptions = {
     frequency: 1000,
@@ -53,3 +73,4 @@ angular.module('starter.controllers', [])
 
 
 })
+
