@@ -59,16 +59,6 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
     // }
   })
 
-  .state('tab.filter', {
-    url: '/filter',
-    views: {
-      'tab-filter': {
-        templateUrl: 'templates/tab-filter.html',
-        controller: 'GradesCtrl'
-      }
-    }
-  })
-
   // .state('tab.chats', {
   //     url: '/chats',
   //     views: {

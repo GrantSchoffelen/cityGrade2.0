@@ -1,12 +1,13 @@
 <ion-view view-title="City Grade">
+  <ion-nav-bar class="bar-stable">
+      <ion-nav-buttons side="right" >
+        <span class='ion-ios-search' ng-click="openFilter()">Filter</span>
+      </ion-nav-buttons>
+  </ion-nav-bar>
   <ion-content class="padding">
     <div class="list card">
-      <div class="item item-body" ng-if="restaurant.length !== 0" ng-repeat = "restaurant in restaurantsArr | orderBy: 'length'">
+      <div class="item item-body" ng-if="restaurant.length !== 0" ng-repeat = "restaurant in restaurantsArr | orderBy: 'length'" ng-click="openSingleRestaurant(restaurant)">
         <h2>{{restaurant[0].dba}}</h2>
-        <div ng-repeat="violation in restaurant | orderBy: '-inspection_date'">
-          {{violation.inspection_date | date: 'mediumDate'}}
-          <li>{{violation.violation_description}}</li>
-       </div>
       </div>
     </div>
   </ion-content>

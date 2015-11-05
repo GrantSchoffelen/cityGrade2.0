@@ -1,7 +1,15 @@
-<ion-view view-title="City Grade">
+<ion-modal-view>
+	 <ion-header-bar align-title="center" class="bar-positive">
+	  <div class="buttons">
+	  </div>
+	  <h1 class="title">Filter</h1>
+	  <div class="buttons">
+	    <button class="button" ng-click="closeFilter()">Close</button>
+	  </div>
+	</ion-header-bar>
   <ion-content class="padding">
     <div class="list card" ng-repeat="cuisine in cuisines" ng-click="getLocationsByCuisine(cuisine)">
     	{{cuisine}}
     </div>
   </ion-content>
-</ion-view>
+</ion-modal-view>

@@ -1,0 +1,18 @@
+
+  <ion-modal-view>
+	 <ion-header-bar align-title="center" class="bar-positive">
+	  <div class="buttons">
+	  </div>
+	  <h1 class="title">{{currentRestaurant[0].dba}}</h1>
+	  <div class="buttons">
+	    <button class="button" ng-click="closeSingleRestaurant()">Close</button>
+	  </div>
+	</ion-header-bar>
+    <ion-content>
+      {{currentRestaurant[0].dba}}
+       <div ng-repeat="violation in currentRestaurant | orderBy: '-inspection_date'">
+          {{violation.inspection_date | date: 'mediumDate'}}
+          <li>{{violation.violation_description}}</li>
+       </div>
+    </ion-content>
+  </ion-modal-view>

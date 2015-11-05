@@ -13,7 +13,6 @@ angular.module('starter.services', [])
       var resDat;
       return $http.get(getUrl)
         .then(function(dat) {
-          console.log(dat);
           return dat.data;
         }).catch(function(err) {
           console.log(err);
@@ -24,7 +23,6 @@ angular.module('starter.services', [])
       var url ='https://data.cityofnewyork.us/resource/9w7m-hzhe.json?zipcode='+zipcode+'&cuisine_description='+cuisine;
       return $http.get(url)
         .then(function(dat) {
-          console.log(dat);
           return dat.data;
         }).catch(function(err) {
           console.log(err);
@@ -54,7 +52,6 @@ angular.module('starter.services', [])
       }).then(function(restMin) {
         return restMin;
       }).catch(function(response) {
-        console.log(response);
       })
       return restaurantsArr;
     },
@@ -62,27 +59,8 @@ angular.module('starter.services', [])
         return ngGPlacesAPI.placeDetails({
           reference: restaurant.reference
         }).then(function(el) {
-          console.log(el);
-
           return el;
         });
-      } //,
-      // init: function () {
-      //   debugger
-      //   var restaurantsArr =[]
-      //   $cordovaGeolocation
-      //     .getCurrentPosition(posOptions)
-      //     .then(function(position) {
-      //       nycHealth.localRestrauntsposition.coords.latitude, position.coords.longitude).then(function (rests) {
-      //         angular.forEach(rests, function (key, val) {
-      //           nycHealth.localRestrauntsMoreInfo(key).then(function (rest) {
-      //               restaurantsArr.push(rest);
-      //           });
-      //         });
-      //         return restaurantsArr;
-      //       })
-      //     })
-      // }
-
+      } 
   }
 })

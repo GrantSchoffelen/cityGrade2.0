@@ -7,21 +7,39 @@ angular.module('starter.controllers', [])
   }; 
   $scope.restaurantsArr = [];
 
-  $ionicModal.fromTemplateUrl('my-modal.html', {
+  $ionicModal.fromTemplateUrl('templates/singlecuisine.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {
-    $scope.modal = modal;
+    $scope.singleRestaurant = modal;
   });
-  $scope.openModal = function() {
-    $scope.modal.show();
+  $scope.openSingleRestaurant = function(restaurant) {
+    $scope.currentRestaurant = restaurant
+    $scope.singleRestaurant.show();
   };
-  $scope.closeModal = function() {
-    $scope.modal.hide();
+  $scope.closeSingleRestaurant = function() {
+    $scope.singleRestaurant.hide();
   };
   //Cleanup the modal when we're done with it!
   $scope.$on('$destroy', function() {
-    $scope.modal.remove();
+    $scope.singleRestaurant.remove();
+  });
+
+  $ionicModal.fromTemplateUrl('templates/tab-filter.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.filter = modal;
+  });
+  $scope.openFilter = function() {
+    $scope.filter.show();
+  };
+  $scope.closeFilter = function() {
+    $scope.filter.hide();
+  };
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.filter.remove();
   });
   //set the default options for the ngPlacesApi
 
@@ -42,6 +60,7 @@ angular.module('starter.controllers', [])
               }
               nycHealth.healthDataByPhone(rest).then(function (grade) {
                 $scope.restaurantsArr.push(grade);
+                console.log($scope.restaurantsArr)
               })
           });
         });
@@ -55,18 +74,12 @@ angular.module('starter.controllers', [])
      $scope.cuisines = ['Thai', 'Bakery', 'American', 'Jewish/Kosher', 'Delicatessen', 'Chinese', 'Hotdog', 'Ice Cream, Gelato, Yogurt, Ices', 'Chicken', 'Turkish', 'Carribbean', 'Donuts', 'Sandwiches/Salads/Mixed Buffet', 'Hamburgers']
 
   $scope.getLocationsByCuisine = function(cuisine){
-    $scope.reload = false;
     $scope.restaurantsArr = []; 
     nycHealth.healthDataByCuisine(cuisine, $rootScope.userZipcode).then(function(grade){
-$scope.restaurantsArr = grade
-
-           setTimeout(function () {
-        $scope.$apply(function () {
-          $scope.restaurantsArr = grade
-        });
-    }, 2000);
-
-          // $scope.$digest(); 
+      console.log(grade)
+      $scope.restaurantsArr.push(grade)
+      console.log($scope.restaurantsArr)
+      $scope.closeFilter
     })
   }
 
