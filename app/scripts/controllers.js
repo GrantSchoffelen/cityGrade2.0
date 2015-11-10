@@ -95,11 +95,32 @@ angular.module('starter.controllers', [])
     image: '../images/thai.png'
   }]
   $scope.getLocationsByCuisine = function(cuisine) {
-    $scope.restaurantsArr = [];
-    nycHealth.healthDataByCuisine(cuisine, $rootScope.userZipcode).then(function(grade) {
-      console.log(grade)
-      $scope.restaurantsArr.push(grade)
-      console.log($scope.restaurantsArr)
+    $scope.restaurantsByCuisine = [];
+    nycHealth.healthDataByCuisine(cuisine.name, $rootScope.userZipcode).then(function(grade) {
+      $scope.restaurantsByCuisine = grade;
+      angular.forEach(grade, function(key, val) {
+        console.log(key, val);
+        if ($scope.restaurantsByCuisine.length === 0) {
+          $scope.restaurantsByCuisine[0] = [];
+          $scope.restaurantsByCuisine[0].push(key);
+        } else {
+          // for (var i = 0; i < $scope.restaurantsByCuisine.length; i++) {
+          //   if (key.camis === $scope.restaurantsByCuisine[i].camis) {
+          //     if (!$scope.restaurantsByCuisine[i]) {
+          //       $scope.restaurantsByCuisine[i] = [];
+          //     }
+          //     $scope.restaurantsByCuisine[i].push(key);
+          //   } else {
+          //     var ind = i + 1;
+          //     if (!$scope.restaurantsByCuisine[ind]) {
+          //       $scope.restaurantsByCuisine[ind] = [];
+          //     }
+          //     $scope.restaurantsByCuisine[ind].push(key)
+          //   }
+          // }
+        }
+      })
+      console.log($scope.restaurantsByCuisine)
       $scope.closeFilter()
     })
   }
