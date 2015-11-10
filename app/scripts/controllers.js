@@ -2,9 +2,9 @@ angular.module('starter.controllers', [])
 
 .controller('GradesCtrl', function($scope, nycHealth, $rootScope, $cordovaGeolocation, ngGPlacesAPI, $http, $ionicModal) {
   $rootScope.dataArray = [];
-  if(!$rootScope.userZipcode){
+  if (!$rootScope.userZipcode) {
     $rootScope.userZipcode = null
-  }; 
+  };
   $scope.restaurantsArr = [];
 
   $ionicModal.fromTemplateUrl('templates/singlecuisine.html', {
@@ -52,16 +52,16 @@ angular.module('starter.controllers', [])
     .then(function(position) {
       $rootScope.lat = position.coords.latitude;
       $rootScope.long = position.coords.longitude;
-      nycHealth.localRestraunts($rootScope.lat, $rootScope.long).then(function (rests) {
-        angular.forEach(rests, function (key, val) {
-          nycHealth.localRestrauntsMoreInfo(key).then(function (rest) {
-              if(!$rootScope.userZipcode){
-                $rootScope.userZipcode = rest.formatted_address.match(/[0-9]{5}/g); 
-              }
-              nycHealth.healthDataByPhone(rest).then(function (grade) {
-                $scope.restaurantsArr.push(grade);
-                console.log($scope.restaurantsArr)
-              })
+      nycHealth.localRestraunts($rootScope.lat, $rootScope.long).then(function(rests) {
+        angular.forEach(rests, function(key, val) {
+          nycHealth.localRestrauntsMoreInfo(key).then(function(rest) {
+            if (!$rootScope.userZipcode) {
+              $rootScope.userZipcode = rest.formatted_address.match(/[0-9]{5}/g);
+            }
+            nycHealth.healthDataByPhone(rest).then(function(grade) {
+              $scope.restaurantsArr.push(grade);
+              console.log($scope.restaurantsArr)
+            })
           });
         });
       })
@@ -71,15 +71,36 @@ angular.module('starter.controllers', [])
         // error
     });
 
-     $scope.cuisines = ['Thai', 'Bakery', 'American', 'Jewish/Kosher', 'Delicatessen', 'Chinese', 'Hotdog', 'Ice Cream, Gelato, Yogurt, Ices', 'Chicken', 'Turkish', 'Carribbean', 'Donuts', 'Sandwiches/Salads/Mixed Buffet', 'Hamburgers']
-
-  $scope.getLocationsByCuisine = function(cuisine){
-    $scope.restaurantsArr = []; 
-    nycHealth.healthDataByCuisine(cuisine, $rootScope.userZipcode).then(function(grade){
+  //  $scope.cuisines = ['Thai', 'Bakery', 'American', 'Jewish/Kosher', 'Delicatessen', 'Chinese', 'Hotdog', 'Ice Cream, Gelato, Yogurt, Ices', 'Chicken', 'Turkish', 'Carribbean', 'Donuts', 'Sandwiches/Salads/Mixed Buffet', 'Hamburgers']
+  $scope.cuisines = [{
+    name: 'Thai',
+    image: 'images/thai.png'
+  }, {
+    name: 'Bakery',
+    image: '../images/bakery.png'
+  }, {
+    name: 'American',
+    image: '../images/American.png'
+  }, {
+    name: 'Jewish/Kosher',
+    image: '../images/jewish.png'
+  }, {
+    name: 'Delicatessen',
+    image: '../images/delicatessen.png'
+  }, {
+    name: 'Chinese',
+    image: '../images/Chinese.png'
+  }, {
+    name: 'Turkish',
+    image: '../images/thai.png'
+  }]
+  $scope.getLocationsByCuisine = function(cuisine) {
+    $scope.restaurantsArr = [];
+    nycHealth.healthDataByCuisine(cuisine, $rootScope.userZipcode).then(function(grade) {
       console.log(grade)
       $scope.restaurantsArr.push(grade)
       console.log($scope.restaurantsArr)
-      $scope.closeFilter
+      $scope.closeFilter()
     })
   }
 
@@ -103,4 +124,3 @@ angular.module('starter.controllers', [])
 
 
 })
-

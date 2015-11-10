@@ -1,1 +1,9 @@
 /* Your application styles go here */
+.bar .bar-header{
+  background: #D6250A;
+color: white;
+}
+.bar-stable{
+  background: #D6250A;
+color: white;
+}

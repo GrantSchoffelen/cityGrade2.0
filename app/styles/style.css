@@ -1,1 +1,18 @@
 /* Empty. Add your own CSS if you like */
+
+.bar-stable {
+  background: #D6250A;
+  color: white;
+}
+.insert-enter {
+  -webkit-transform: scale(0);
+  -webkit-transition-property: all;
+  -webkit-transition-timing-function: ease-out-cubic;
+  -webkit-transition-duration: 400ms;
+}
+.insert-enter.insert-enter-active {
+  -webkit-transform: scale(1);
+}
+.scroll-content{
+    background-color: #C1BABA;
+}
