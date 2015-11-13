@@ -15,6 +15,7 @@
 }
 .scroll-content{
     background-color: whitesmoke;
+    background-image: url('../images/background.png');
 }
 /*.bar.bar-assertive {
     border-color: #993333;
@@ -22,3 +23,17 @@
     background-image: linear-gradient(0deg, #993333, #993333 50%, transparent 50%);
     color: #fff;
 }*/
+
+.list .item.item-accordion {
+  line-height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
+}
+.list .item.item-accordion.ng-hide {
+  line-height: 0px;
+}
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
+}

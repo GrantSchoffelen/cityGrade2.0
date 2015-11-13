@@ -1,17 +1,15 @@
 <ion-modal-view>
-	 <ion-header-bar align-title="center" class="bar-positive">
-	  <div class="buttons">
-	  </div>
-	  <h1 class="title">Filter</h1>
-	  <div class="buttons">
-	    <button class="button" ng-click="closeFilter()">Close</button>
-	  </div>
-	</ion-header-bar>
+  <ion-header-bar align-title="center" class="bar-positive">
+    <div class="buttons"></div>
+    <h1 class="title">Food Categories</h1>
+    <div class="buttons">
+      <button class="button" ng-click="closeFilter()">Close</button>
+    </div>
+  </ion-header-bar>
   <ion-content >
-    <md-card
-              ng-style="{'background-image': 'url(' + cuisine.image + ')'}" style="height: 7em;background-repeat: no-repeat;background-size: cover;" ng-repeat="cuisine in cuisines" ng-click="getLocationsByCuisine(cuisine)">
-    	<h2 style="text-align:center;color:white">{{cuisine.name}}</h2>
-			<!-- <img ng-src="images/{{cuisine}}.jpeg"> -->
+    <md-card ng-click="getLocationsByCuisine(cuisine)" ng-repeat="cuisine in cuisines" ng-style="{'background-image': 'url(' + cuisine.image + ')'}" style="height: 7em;background-repeat: no-repeat;background-size: cover;">
+      <h2 style="text-align:center;color:white">{{cuisine.name}}</h2>
+      <!-- <img ng-src="images/{{cuisine}}.jpeg"> -->
     </md-card>
   </ion-content>
 </ion-modal-view>

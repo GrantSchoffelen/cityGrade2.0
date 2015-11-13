@@ -14,7 +14,8 @@ angular.module('starter.controllers', [])
     $scope.singleRestaurant = modal;
   });
   $scope.openSingleRestaurant = function(restaurant) {
-    $scope.currentRestaurant = restaurant
+    console.log($scope.currentRestaurant, restaurant);
+    $scope.currentRestaurant = restaurant;
     $scope.singleRestaurant.show();
   };
   $scope.closeSingleRestaurant = function() {
@@ -60,7 +61,6 @@ angular.module('starter.controllers', [])
             }
             nycHealth.healthDataByPhone(rest).then(function(grade) {
               $scope.restaurantsArr.push(grade);
-              console.log($scope.restaurantsArr)
             })
           });
         });
@@ -71,6 +71,17 @@ angular.module('starter.controllers', [])
         // error
     });
 
+    $scope.toggleViolation = function(index) {
+      console.log($scope.shownViolation, index);
+        if ($scope.isViolationShown(index)) {
+          $scope.shownViolation = null;
+        } else {
+          $scope.shownViolation = + index;
+        }
+      };
+      $scope.isViolationShown = function(index) {
+        return $scope.shownViolation === index;
+      };
   //  $scope.cuisines = ['Thai', 'Bakery', 'American', 'Jewish/Kosher', 'Delicatessen', 'Chinese', 'Hotdog', 'Ice Cream, Gelato, Yogurt, Ices', 'Chicken', 'Turkish', 'Carribbean', 'Donuts', 'Sandwiches/Salads/Mixed Buffet', 'Hamburgers']
   $scope.cuisines = [{
     name: 'Thai',
@@ -79,7 +90,7 @@ angular.module('starter.controllers', [])
     name: 'Bakery',
     image: '../images/bakery.png'
   }, {
-    name: 'American',
+    name: 'Carribbean',
     image: '../images/American.png'
   }, {
     name: 'Jewish/Kosher',
@@ -101,12 +112,9 @@ angular.module('starter.controllers', [])
       var value;
       angular.forEach(source, function(key, val) {
         if (Number(key[0].camis) === Number(camis)) {
-          // console.log(val, key[0].camis, camis, 'matched');
           value = val;
           return;
-        } else {
-          // console.log(val, key[0].camis, camis, 'nope');
-        }
+        };
       });
       return value;
     };
@@ -126,7 +134,7 @@ angular.module('starter.controllers', [])
           }
         };
       });
-      console.log($scope.restaurantsByCuisine)
+      console.log($scope.restaurantsByCuisine);
       $scope.closeFilter()
     })
   }

@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', 'ngCordova', 'ngGPlaces', 'ngMaterial','ngAnimate'])
+angular.module('starter', ['ionic', 'angular-loading-bar', 'starter.services', 'starter.controllers', 'starter.directives', 'ngCordova', 'ngGPlaces', 'ngMaterial','ngAnimate'])
 
 .run(function($ionicPlatform, $cordovaGeolocation, $rootScope, $http, nycHealth) {
   $ionicPlatform.ready(function() {
@@ -24,7 +24,8 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+
+.config(function($stateProvider, $urlRouterProvider, cfpLoadingBarProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -87,7 +88,8 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
   //     }
   //   }
   // });
-
+  cfpLoadingBarProvider.includeBar = false;
+  cfpLoadingBarProvider.spinnerTemplate = '<div style="position:absolute; z-index:10000; margin:49%"><img src="images/spinner.svg"></div>';
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/dash');
 

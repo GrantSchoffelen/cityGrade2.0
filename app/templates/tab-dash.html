@@ -10,64 +10,14 @@
     </ion-nav-buttons>
   </ion-nav-bar>
   <ion-content class="padding">
-    <!-- <md-fab-speed-dial ng-class="md-fab-bottom-left" ng-click="openFilter()" style="    position: absolute;
-    bottom: 0;
-    right: 0;">
-      <md-fab-trigger>
-        <md-tooltip md-direction="left" style="font-size:16px">
-          Filter
-        </md-tooltip>
-        <md-button aria-label="menu" class="md-fab md-warn">
-          <img src="images/food_icon.svg" style="width: 2em;margin-top: 26%;">
-        </md-button>
-      </md-fab-trigger>
-    </md-fab-speed-dial> -->
-
     <div>
-      <div class="item item-text-wrap md-whiteframe-2dp" layout="row" ng-click="openSingleRestaurant(restaurant)" ng-if="restaurant.length !== 0" ng-repeat="restaurant in restaurantsArr | orderBy: 'length'" style=" padding: 0;margin-bottom: 1%;margin-top: 2%;">
-        <div flex="75" layout="column" style="padding: 3%;">
-          <div layout="row">
-            <img src="images/American.png" style="height: 3em;width:3em;">
-            <div style="    margin-left: 10px;">
-              <h4>{{restaurant[0].dba}}</h4>
-              <h4 style="color:#7D7373;">{{restaurant[0].phone}}</h4>
-            </div>
-          </div>
-          <h4 style="margin-top:10px">{{restaurant[0].building}}
-            {{restaurant[0].street}}</h4>
-          <h4 style="color:#7D7373;">
-            Cuisine Type:
-            {{restaurant[0].cuisine_description}}</h4>
-        </div>
-        <div flex>
-          <img ng-if="restaurant[0].score < 13" ng-src="images/A.jpeg" style="float:right;height: 5em;margin: 10px;">
-          <img ng-if="restaurant[0].score > 14 && restaurant[0].score < 27" ng-src="images/B.jpg" style="float:right;height: 5em;margin: 10px;">
-          <img ng-if="restaurant[0].score > 28" ng-src="images/C.jpg" style="float:right;height: 5em;margin: 10px;">
-          <img ng-if="!restaurant[0].score" ng-src="images/pending.jpg" style="float:right;height: 5em;margin: 10px;">
-        </div>
+      <div ng-click="openSingleRestaurant(restaurant)" ng-if="restaurant.length !== 0 && !restaurantsByCuisine" ng-repeat="restaurant in restaurantsArr | orderBy: 'length'">
+        <basic-card></basic-card>
       </div>
+
       <!-- for restaurants by zip -->
-      <div class="item item-text-wrap md-whiteframe-2dp" layout="row" ng-if="restaurant.camis" ng-click="openSingleRestaurant(restaurant)" ng-repeat="restaurant in restaurantsByCuisine | orderBy: 'length'" style=" padding: 0;margin-bottom: 1%;margin-top: 2%;">
-        <div flex="75" layout="column" style="padding: 3%;">
-          <div layout="row">
-            <img src="images/American.png" style="height: 3em;width:3em;">
-            <div style="    margin-left: 10px;">
-              <h4>{{restaurant.dba}}</h4>
-              <h4 style="color:#7D7373;">{{restaurant.phone}}</h4>
-            </div>
-          </div>
-          <h4 style="margin-top:10px">{{restaurant.building}}
-            {{restaurant.street}}</h4>
-          <h4 style="color:#7D7373;">
-            Cuisine Type:
-            {{restaurant.cuisine_description}}</h4>
-        </div>
-        <div flex>
-          <img ng-if="restaurant.score < 13" ng-src="images/A.jpeg" style="float:right;height: 5em;">
-          <img ng-if="restaurant.score > 14 && restaurant[0].score < 27" ng-src="images/B.jpg" style="float:right;height: 5em;">
-          <img ng-if="restaurant.score > 28" ng-src="images/C.jpg" style="float:right;height: 5em;">
-          <img ng-if="!restaurant.score" ng-src="images/pending.jpg" style="float:right;height: 5em;">
-        </div>
+      <div ng-click="openSingleRestaurant(restaurant)" ng-if="restaurantsByCuisine" ng-repeat="restaurant in restaurantsByCuisine | orderBy: 'length'">
+        <basic-card></basic-card>
       </div>
 
     </div>

@@ -13,19 +13,14 @@ angular.module('starter.services', [])
       var resDat;
       return $http.get(getUrl)
         .then(function(dat) {
-          console.log(dat.data, 'by phone')
           return dat.data;
-        }).catch(function(err) {
-          console.log(err);
-        }).finally(function() {})
+        }).catch(function(err) {}).finally(function() {})
     },
 
-    healthDataByCuisine: function(cuisine, zipcode){
-      var url ='https://data.cityofnewyork.us/resource/9w7m-hzhe.json?zipcode='+zipcode+'&cuisine_description='+cuisine;
+    healthDataByCuisine: function(cuisine, zipcode) {
+      var url = 'https://data.cityofnewyork.us/resource/9w7m-hzhe.json?zipcode=' + zipcode + '&cuisine_description=' + cuisine;
       return $http.get(url)
         .then(function(dat) {
-          console.log(dat, 'by zip')
-
           return dat.data;
         }).catch(function(err) {
           console.log(err);
@@ -54,16 +49,15 @@ angular.module('starter.services', [])
         defaults: defaults
       }).then(function(restMin) {
         return restMin;
-      }).catch(function(response) {
-      })
+      }).catch(function(response) {})
       return restaurantsArr;
     },
     localRestrauntsMoreInfo: function(restaurant) {
-        return ngGPlacesAPI.placeDetails({
-          reference: restaurant.reference
-        }).then(function(el) {
-          return el;
-        });
-      }
+      return ngGPlacesAPI.placeDetails({
+        reference: restaurant.reference
+      }).then(function(el) {
+        return el;
+      });
+    }
   }
 })

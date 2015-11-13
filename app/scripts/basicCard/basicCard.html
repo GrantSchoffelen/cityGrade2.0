@@ -1,0 +1,27 @@
+<div class="item item-text-wrap md-whiteframe-2dp" layout="row" style=" padding: 0;margin-bottom: 1%;margin-top: 2%;">
+  <div flex="75" layout="column" style="padding: 3%;">
+    <div layout="row">
+      <img src="images/American.png" style="height: 3em;width:3em;">
+      <div style="    margin-left: 10px;">
+        <h4>{{restaurant[0].dba}}</h4>
+        <h4 style="color:#7D7373;">Phone:
+          {{restaurant[0].phone}}</h4>
+        <!-- <h4 style="color:#7D7373;">
+          score
+          {{restaurant[0].score}}</h4> -->
+      </div>
+    </div>
+    <h4 style="margin-top:10px">{{restaurant[0].building}}
+      {{restaurant[0].street}}</h4>
+    <h4 style="color:#7D7373;">
+      Cuisine Type:
+      {{restaurant[0].cuisine_description}}</h4>
+
+  </div>
+  <div flex>
+    <img ng-if="restaurant[0].score <= 13" ng-src="images/A.jpeg" style="float:right;height: 5em;margin: 10px;">
+    <img ng-if="restaurant[0].score > 13 && restaurant[0].score < 27" ng-src="images/B.jpg" style="float:right;height: 5em;margin: 10px;">
+    <img ng-if="restaurant[0].score >= 27" ng-src="images/C.jpg" style="float:right;height: 5em;margin: 10px;">
+    <img ng-if="!restaurant[0].score" ng-src="images/pending.jpg" style="float:right;height: 5em;margin: 10px;">
+  </div>
+</div>

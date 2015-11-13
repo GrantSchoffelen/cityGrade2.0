@@ -1,18 +1,46 @@
+<ion-modal-view>
+  <ion-header-bar align-title="center" class="bar-assertive">
+    <div class="buttons"></div>
+    <h1 class="title">{{currentRestaurant[0].dba}}</h1>
+    <div class="buttons">
+      <button class="button" ng-click="closeSingleRestaurant()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <md-content layout="column">
+      <div flex="20" layout="row" ng-style="{'background-image': 'url(' + 'images/thai.png'+ ')'}" style="height: 108px;"></div>
+      <div layout="row" style="background-color:rgb(68, 68, 68);">
+        <div flex="85" layout="column">
+          <h3 style="color: white;padding: 3%;margin-bottom: 0;">{{currentRestaurant[0].dba}}</h3>
+          <h6 style="margin-top: 0;padding-left: 3%;color: white;font-style: italic;">{{currentRestaurant[0].action}}</h6>
+        </div>
+        <div flex layout="column">
+          <span style="text-align: center;color:white">Score</span>
+          <h1 style="text-align: center;color: white;margin: 0;">{{currentRestaurant[0].score}}</h1>
 
-  <ion-modal-view>
-	 <ion-header-bar align-title="center" class="bar-positive">
-	  <div class="buttons">
-	  </div>
-	  <h1 class="title">{{currentRestaurant[0].dba}}</h1>
-	  <div class="buttons">
-	    <button class="button" ng-click="closeSingleRestaurant()">Close</button>
-	  </div>
-	</ion-header-bar>
-    <ion-content>
-      {{currentRestaurant[0].dba}}
-       <div ng-repeat="violation in currentRestaurant | orderBy: '-inspection_date'">
-          {{violation.inspection_date | date: 'mediumDate'}}
-          <li>{{violation.violation_description}}</li>
-       </div>
-    </ion-content>
-  </ion-modal-view>
+        </div>
+      </div>
+
+      <ion-list>
+        <div ng-repeat="violation in currentRestaurant">
+          <ion-item class="item-stable" layout="row" ng-class="{active: isViolationShown($index)}" ng-click="toggleViolation($index)">
+          <i flex="5" class="icon" ng-class="isViolationShown($index) ? 'ion-minus' : 'ion-plus'"></i>
+            <span flex="90" style="padding-left: 2%;">{{violation.inspection_type}}</span>
+            <span>{{violation.score}}</span>
+          </ion-item>
+          <md-content class="md-padding" ng-show="isViolationShown($index)">
+            <h4><span style="color:#4a87ee">Inspection on: </span>{{violation.inspection_date | date: 'short'}}</h4>
+            <h5 style="color:#4a87ee">Violation Cited:</h5>
+            {{violation.violation_description}}
+          </md-content>
+        </div>
+      </ion-list>
+
+      <!-- <div ng-repeat="violation in currentRestaurant | orderBy: '-inspection_date'">
+        {{violation.inspection_date | date: 'mediumDate'}}
+      <li>{{violation.violation_description}}</li>
+    </div> -->
+  </md-content>
+
+</ion-content>
+</ion-modal-view>
