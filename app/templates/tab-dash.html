@@ -47,7 +47,7 @@
         </div>
       </div>
       <!-- for restaurants by zip -->
-      <div class="item item-text-wrap md-whiteframe-2dp" layout="row" ng-click="openSingleRestaurant(restaurant)" ng-repeat="restaurant in restaurantsByCuisine | orderBy: 'length'" style=" padding: 0;margin-bottom: 1%;margin-top: 2%;">
+      <div class="item item-text-wrap md-whiteframe-2dp" layout="row" ng-if="restaurant.camis" ng-click="openSingleRestaurant(restaurant)" ng-repeat="restaurant in restaurantsByCuisine | orderBy: 'length'" style=" padding: 0;margin-bottom: 1%;margin-top: 2%;">
         <div flex="75" layout="column" style="padding: 3%;">
           <div layout="row">
             <img src="images/American.png" style="height: 3em;width:3em;">

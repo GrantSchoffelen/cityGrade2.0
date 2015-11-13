@@ -96,30 +96,36 @@ angular.module('starter.controllers', [])
   }]
   $scope.getLocationsByCuisine = function(cuisine) {
     $scope.restaurantsByCuisine = [];
-    nycHealth.healthDataByCuisine(cuisine.name, $rootScope.userZipcode).then(function(grade) {
-      $scope.restaurantsByCuisine = grade;
-      angular.forEach(grade, function(key, val) {
-        console.log(key, val);
-        if ($scope.restaurantsByCuisine.length === 0) {
-          $scope.restaurantsByCuisine[0] = [];
-          $scope.restaurantsByCuisine[0].push(key);
+
+    function findBycamis(source, camis) {
+      var value;
+      angular.forEach(source, function(key, val) {
+        if (Number(key[0].camis) === Number(camis)) {
+          // console.log(val, key[0].camis, camis, 'matched');
+          value = val;
+          return;
         } else {
-          // for (var i = 0; i < $scope.restaurantsByCuisine.length; i++) {
-          //   if (key.camis === $scope.restaurantsByCuisine[i].camis) {
-          //     if (!$scope.restaurantsByCuisine[i]) {
-          //       $scope.restaurantsByCuisine[i] = [];
-          //     }
-          //     $scope.restaurantsByCuisine[i].push(key);
-          //   } else {
-          //     var ind = i + 1;
-          //     if (!$scope.restaurantsByCuisine[ind]) {
-          //       $scope.restaurantsByCuisine[ind] = [];
-          //     }
-          //     $scope.restaurantsByCuisine[ind].push(key)
-          //   }
-          // }
+          // console.log(val, key[0].camis, camis, 'nope');
         }
-      })
+      });
+      return value;
+    };
+    nycHealth.healthDataByCuisine(cuisine.name, $rootScope.userZipcode).then(function(grade) {
+      var index;
+      angular.forEach(grade, function(key, val) {
+        if ($scope.restaurantsByCuisine.length === 0) {
+          $scope.restaurantsByCuisine.push([key]);
+        } else {
+          index = findBycamis($scope.restaurantsByCuisine, key.camis);
+          if (index !== null && index !== undefined) {
+            $scope.restaurantsByCuisine[index].push(key);
+          } else {
+            if (key.camis) {
+              $scope.restaurantsByCuisine.push([key]);
+            }
+          }
+        };
+      });
       console.log($scope.restaurantsByCuisine)
       $scope.closeFilter()
     })

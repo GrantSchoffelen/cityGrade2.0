@@ -9,7 +9,7 @@
 	</ion-header-bar>
   <ion-content >
     <md-card
-              ng-style="{'background-image': 'url(' + cuisine.image + ')'}" style="height: 7em;" ng-repeat="cuisine in cuisines" ng-click="getLocationsByCuisine(cuisine)">
+              ng-style="{'background-image': 'url(' + cuisine.image + ')'}" style="height: 7em;background-repeat: no-repeat;background-size: cover;" ng-repeat="cuisine in cuisines" ng-click="getLocationsByCuisine(cuisine)">
     	<h2 style="text-align:center;color:white">{{cuisine.name}}</h2>
 			<!-- <img ng-src="images/{{cuisine}}.jpeg"> -->
     </md-card>
