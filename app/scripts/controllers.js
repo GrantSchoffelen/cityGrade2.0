@@ -25,6 +25,14 @@ angular.module('starter.controllers', [])
   $scope.$on('$destroy', function() {
     $scope.singleRestaurant.remove();
   });
+  //search by text field search from the user
+  $scope.inputSearch = function (inputedText) {
+    var searchParam = $scope.SearchByInput || inputedText;
+    nycHealth.healthDataByDba(searchParam).then(function(restaurants) {
+      console.log(restaurants, 'from search');
+      $scope.restaurantsArr = restaurants;
+    });
+  }
 
   $ionicModal.fromTemplateUrl('templates/tab-filter.html', {
     scope: $scope,

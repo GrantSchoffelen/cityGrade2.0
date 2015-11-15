@@ -1,63 +1,99 @@
 angular.module('starter.services', [])
 
 .factory('nycHealth', function($http, ngGPlacesAPI, ngGPlacesAPI, $cordovaGeolocation, $rootScope, $q) {
-  return {
-    healthDataByPhone: function(el) {
-      var cityOpenDataUrl = 'https://data.cityofnewyork.us/resource/9w7m-hzhe.json?phone=';
-      var phoneNumber = el.formatted_phone_number
-      phoneNumber = phoneNumber.replace(/\s/g, '');
-      phoneNumber = phoneNumber.replace(/\)/g, '');
-      phoneNumber = phoneNumber.replace(/\(/g, '');
-      phoneNumber = phoneNumber.replace(/\-/g, '');
-      var getUrl = cityOpenDataUrl + phoneNumber;
-      var resDat;
-      return $http.get(getUrl)
-        .then(function(dat) {
-          return dat.data;
-        }).catch(function(err) {}).finally(function() {})
-    },
+    function findBycamis(source, camis) {
+        var value;
+        angular.forEach(source, function(key, val) {
+            if (Number(key[0].camis) === Number(camis)) {
+                value = val;
+                return;
+            };
+        });
+        return value;
+    };
+    return {
+        healthDataByPhone: function(el) {
+            var cityOpenDataUrl = 'https://data.cityofnewyork.us/resource/9w7m-hzhe.json?phone=';
+            var phoneNumber = el.formatted_phone_number
+            phoneNumber = phoneNumber.replace(/\s/g, '');
+            phoneNumber = phoneNumber.replace(/\)/g, '');
+            phoneNumber = phoneNumber.replace(/\(/g, '');
+            phoneNumber = phoneNumber.replace(/\-/g, '');
+            var getUrl = cityOpenDataUrl + phoneNumber;
+            var resDat;
+            return $http.get(getUrl)
+                .then(function(dat) {
+                   
+                    return dat.data;
+                }).catch(function(err) {}).finally(function() {})
+        },
+        healthDataByDba: function(el) {
+            console.log(el)
+            var cityOpenDataUrl = 'https://data.cityofnewyork.us/resource/9w7m-hzhe.json?dba=';
+            var getUrl = cityOpenDataUrl + el.toUpperCase();
+            return $http.get(getUrl)
+                .then(function(dat) {
+                   var restaurantsByDba = [];
+                    var rests = dat.data;
 
-    healthDataByCuisine: function(cuisine, zipcode) {
-      var url = 'https://data.cityofnewyork.us/resource/9w7m-hzhe.json?zipcode=' + zipcode + '&cuisine_description=' + cuisine;
-      return $http.get(url)
-        .then(function(dat) {
-          return dat.data;
-        }).catch(function(err) {
-          console.log(err);
-        }).finally(function() {})
-    },
+                    angular.forEach(rests, function(key, val) {
+                        if (restaurantsByDba.length === 0) {
+                            restaurantsByDba.push([key]);
+                        } else {
+                            index = findBycamis(restaurantsByDba, key.camis);
+                            if (index !== null && index !== undefined) {
+                                restaurantsByDba[index].push(key);
+                            } else {
+                                if (key.camis) {
+                                    restaurantsByDba.push([key]);
+                                }
+                            }
+                        };
+                    });
+                    return restaurantsByDba;
+                }).catch(function(err) {}).finally(function() {})
+        },
+        healthDataByCuisine: function(cuisine, zipcode) {
+            var url = 'https://data.cityofnewyork.us/resource/9w7m-hzhe.json?zipcode=' + zipcode + '&cuisine_description=' + cuisine;
+            return $http.get(url)
+                .then(function(dat) {
+                    return dat.data;
+                }).catch(function(err) {
+                    console.log(err);
+                }).finally(function() {})
+        },
 
-    localRestraunts: function(lat, long) {
-      var defaults = {
-        radius: 30000,
-        sensor: false,
-        latitude: null,
-        longitude: null,
-        types: ['food'],
-        map: null,
-        elem: null,
-        nearbySearchKeys: ['name', 'reference', 'vicinity'],
-        placeDetailsKeys: ['formatted_address', 'formatted_phone_number',
-          'reference', 'website'
-        ],
-        nearbySearchErr: 'Unable to find nearby places',
-        placeDetailsErr: 'Unable to find place details',
-      };
-      return ngGPlacesAPI.nearbySearch({
-        latitude: lat,
-        longitude: long,
-        defaults: defaults
-      }).then(function(restMin) {
-        return restMin;
-      }).catch(function(response) {})
-      return restaurantsArr;
-    },
-    localRestrauntsMoreInfo: function(restaurant) {
-      return ngGPlacesAPI.placeDetails({
-        reference: restaurant.reference
-      }).then(function(el) {
-        return el;
-      });
+        localRestraunts: function(lat, long) {
+            var defaults = {
+                radius: 30000,
+                sensor: false,
+                latitude: null,
+                longitude: null,
+                types: ['food'],
+                map: null,
+                elem: null,
+                nearbySearchKeys: ['name', 'reference', 'vicinity'],
+                placeDetailsKeys: ['formatted_address', 'formatted_phone_number',
+                    'reference', 'website'
+                ],
+                nearbySearchErr: 'Unable to find nearby places',
+                placeDetailsErr: 'Unable to find place details',
+            };
+            return ngGPlacesAPI.nearbySearch({
+                latitude: lat,
+                longitude: long,
+                defaults: defaults
+            }).then(function(restMin) {
+                return restMin;
+            }).catch(function(response) {})
+            return restaurantsArr;
+        },
+        localRestrauntsMoreInfo: function(restaurant) {
+            return ngGPlacesAPI.placeDetails({
+                reference: restaurant.reference
+            }).then(function(el) {
+                return el;
+            });
+        }
     }
-  }
 })

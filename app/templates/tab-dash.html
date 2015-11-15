@@ -1,25 +1,32 @@
 <ion-view view-title="City Grade">
-  <ion-nav-bar class="bar-assertive">
-    <ion-nav-buttons side="right">
-      <md-button aria-label="menu" class="md-fab md-warn" ng-click="openFilter()">
-        <img src="images/food_icon.svg" style="width: 2em;margin-top: 26%;">
-        <md-tooltip md-direction="left">
-          Filter
-        </md-tooltip>
-      </md-button>
-    </ion-nav-buttons>
-  </ion-nav-bar>
-  <ion-content class="padding">
-    <div>
-      <div ng-click="openSingleRestaurant(restaurant)" ng-if="restaurant.length !== 0 && !restaurantsByCuisine" ng-repeat="restaurant in restaurantsArr | orderBy: 'length'">
-        <basic-card></basic-card>
-      </div>
-
-      <!-- for restaurants by zip -->
-      <div ng-click="openSingleRestaurant(restaurant)" ng-if="restaurantsByCuisine" ng-repeat="restaurant in restaurantsByCuisine | orderBy: 'length'">
-        <basic-card></basic-card>
-      </div>
-
-    </div>
-  </ion-content>
+    <ion-nav-bar class="bar-assertive">
+        <ion-nav-buttons side="right">
+            <md-button aria-label="menu" class="md-fab md-warn" ng-click="openFilter()">
+                <img src="images/food_icon.svg" style="width: 2em;margin-top: 26%;">
+                <md-tooltip md-direction="left">
+                    Filter
+                </md-tooltip>
+            </md-button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content class="padding">
+        <div layout="row">
+            <md-input-container flex="80" style="background-color: white;padding: 0;">
+                <label style="text-align: center;font-size: 1.6em;">Search</label>
+                <input ng-model="SearchByInput" type="text">
+            </md-input-container>
+             <md-button flex aria-label="menu" class="md-fab md-primary" ng-click="inputSearch(SearchByInput)">
+             <i class="icon ion-search placeholder-icon" style="font-size: 31px;color: white;"></i>
+            </md-button>
+        </div>
+        <div>
+            <div ng-click="openSingleRestaurant(restaurant)" ng-if="restaurant.length !== 0 && !restaurantsByCuisine" ng-repeat="restaurant in restaurantsArr | orderBy: 'length'">
+                <basic-card></basic-card>
+            </div>
+            <!-- for restaurants by zip -->
+            <div ng-click="openSingleRestaurant(restaurant)" ng-if="restaurantsByCuisine" ng-repeat="restaurant in restaurantsByCuisine | orderBy: 'length'">
+                <basic-card></basic-card>
+            </div>
+        </div>
+    </ion-content>
 </ion-view>
