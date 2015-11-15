@@ -12,18 +12,27 @@ angular.module('starter.services', [])
         return value;
     };
     return {
+        findBy: function(source, camis) {
+            return findBycamis(source, camis);
+        },
         healthDataByPhone: function(el) {
             var cityOpenDataUrl = 'https://data.cityofnewyork.us/resource/9w7m-hzhe.json?phone=';
-            var phoneNumber = el.formatted_phone_number
-            phoneNumber = phoneNumber.replace(/\s/g, '');
-            phoneNumber = phoneNumber.replace(/\)/g, '');
-            phoneNumber = phoneNumber.replace(/\(/g, '');
-            phoneNumber = phoneNumber.replace(/\-/g, '');
+            var phoneNumber = el.formatted_phone_number || el;
+            if (phoneNumber.search(/\s/g) != -1) {
+                phoneNumber = phoneNumber.replace(/\s/g, '');
+            }
+            if (phoneNumber.search(/\)/g) != -1) {
+                phoneNumber = phoneNumber.replace(/\)/g, '');
+            }
+            if (phoneNumber.search(/\(/g) != -1) {
+                phoneNumber = phoneNumber.replace(/\(/g, '');
+            }
+            if (phoneNumber.search(/\-/g) != -1) {
+                phoneNumber = phoneNumber.replace(/\-/g, '');
+            }
             var getUrl = cityOpenDataUrl + phoneNumber;
-            var resDat;
             return $http.get(getUrl)
                 .then(function(dat) {
-                   
                     return dat.data;
                 }).catch(function(err) {}).finally(function() {})
         },
@@ -33,7 +42,7 @@ angular.module('starter.services', [])
             var getUrl = cityOpenDataUrl + el.toUpperCase();
             return $http.get(getUrl)
                 .then(function(dat) {
-                   var restaurantsByDba = [];
+                    var restaurantsByDba = [];
                     var rests = dat.data;
 
                     angular.forEach(rests, function(key, val) {
@@ -57,7 +66,23 @@ angular.module('starter.services', [])
             var url = 'https://data.cityofnewyork.us/resource/9w7m-hzhe.json?zipcode=' + zipcode + '&cuisine_description=' + cuisine;
             return $http.get(url)
                 .then(function(dat) {
-                    return dat.data;
+                    var restaurantsByCusine = [];
+                    var rests = dat.data;
+                    angular.forEach(rests, function(key, val) {
+                        if (restaurantsByCusine.length === 0) {
+                            restaurantsByCusine.push([key]);
+                        } else {
+                            index = findBycamis(restaurantsByCusine, key.camis);
+                            if (index !== null && index !== undefined) {
+                                restaurantsByCusine[index].push(key);
+                            } else {
+                                if (key.camis) {
+                                    restaurantsByCusine.push([key]);
+                                }
+                            }
+                        };
+                    });
+                    return restaurantsByCusine;
                 }).catch(function(err) {
                     console.log(err);
                 }).finally(function() {})

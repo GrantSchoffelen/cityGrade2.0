@@ -10,22 +10,55 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content class="padding">
+    <form name='searchByText'>
+        <div class="list list-inset" style="margin-bottom: 5px;">
+            <label class="item item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input required type="text" name="input" ng-model="SearchByInput" placeholder="Search by Restraunt {{searchInputType}}">
+            </label>
+        </div>
+        </form>
         <div layout="row">
-            <md-input-container flex="80" style="background-color: white;padding: 0;">
-                <label style="text-align: center;font-size: 1.6em;">Search</label>
-                <input ng-model="SearchByInput" type="text">
-            </md-input-container>
-             <md-button flex aria-label="menu" class="md-fab md-primary" ng-click="inputSearch(SearchByInput)">
-             <i class="icon ion-search placeholder-icon" style="font-size: 31px;color: white;"></i>
-            </md-button>
+            <md-menu flex>
+                <button ng-click="$mdOpenMenu($event)" class="button button-light">
+                    <i class="icon ion-navicon-round placeholder-icon" style="font-size: 31px;color: #e42012;"></i>
+                </button>
+                <md-menu-content width="6">
+                    <md-menu-item>
+                        <div layout="row" layout-align="space-between center">
+                            <md-button style="text-align: left;" flex="70" ng-click="setSearchInput('Name')">
+                                <md-icon style="margin: 0;padding: 0;margin-top: -11px;font-size: 22px;color: #e42012;" md-menu-align-target class="icon ion-android-restaurant placeholder-icon"></md-icon>
+                                Restaurant Name
+                            </md-button>
+                            <label flex class="checkbox">
+                                <input  ng-checked="searchInputType === 'Name'" type="checkbox">
+                            </label>
+                        </div>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <div layout="row">
+                            <md-button style="text-align: left;" flex="70" ng-click="setSearchInput('Phone #')">
+                                <md-icon style="margin: 0;padding: 0;margin-top: -11px;font-size: 22px;color: #e42012;" md-menu-align-target class="icon ion-ios-telephone placeholder-icon"></md-icon>
+                                Restaurant Phone #
+                            </md-button>
+                             <label  flex class="checkbox">
+                                <input  ng-checked="searchInputType === 'Phone #'"type="checkbox">
+                            </label>
+                        </div>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+            <button flex="80" ng-click="inputSearch(SearchByInput, searchInputType)" class="button button-positive" ng-disabled="searchByText.$invalid">
+                <i class="icon ion-search placeholder-icon" style="font-size: 31px;color: white;"></i> Search
+            </button>
         </div>
         <div>
-            <div ng-click="openSingleRestaurant(restaurant)" ng-if="restaurant.length !== 0 && !restaurantsByCuisine" ng-repeat="restaurant in restaurantsArr | orderBy: 'length'">
+            <div ng-click="openSingleRestaurant(restaurant)" ng-if="restaurant.length !== 0 " ng-repeat="restaurant in restaurantsArr | orderBy: 'length'">
                 <basic-card></basic-card>
             </div>
             <!-- for restaurants by zip -->
-            <div ng-click="openSingleRestaurant(restaurant)" ng-if="restaurantsByCuisine" ng-repeat="restaurant in restaurantsByCuisine | orderBy: 'length'">
-                <basic-card></basic-card>
+           <!--  <div ng-click="openSingleRestaurant(restaurant)" ng-if="restaurantsByCuisine" ng-repeat="restaurant in restaurantsByCuisine | orderBy: 'length'">
+                <basic-card></basic-card> -->
             </div>
         </div>
     </ion-content>
