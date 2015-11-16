@@ -1,22 +1,33 @@
 /* Empty. Add your own CSS if you like */
 
 .bar-stable {
-  background: #D6250A;
-  color: white;
+    background: #D6250A;
+    color: white;
 }
+
 .insert-enter {
-  -webkit-transform: scale(0);
-  -webkit-transition-property: all;
-  -webkit-transition-timing-function: ease-out-cubic;
-  -webkit-transition-duration: 400ms;
+    -webkit-transform: scale(0);
+    -webkit-transition-property: all;
+    -webkit-transition-timing-function: ease-out-cubic;
+    -webkit-transition-duration: 400ms;
 }
+
 .insert-enter.insert-enter-active {
-  -webkit-transform: scale(1);
+    -webkit-transform: scale(1);
 }
-.scroll-content{
-    background-color: whitesmoke;
-    background-image: url('../images/background.png');
+
+.scroll-content {
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f6f8f9+0,a36b6a+100,f5f7f9+100,a53331+100 */
+background: rgb(246,248,249); /* Old browsers */
+background: -moz-linear-gradient(-45deg,  rgba(246,248,249,1) 0%, rgba(163,107,106,1) 100%, rgba(245,247,249,1) 100%, rgba(165,51,49,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg,  rgba(246,248,249,1) 0%,rgba(163,107,106,1) 100%,rgba(245,247,249,1) 100%,rgba(165,51,49,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg,  rgba(246,248,249,1) 0%,rgba(163,107,106,1) 100%,rgba(245,247,249,1) 100%,rgba(165,51,49,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', endColorstr='#a53331',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+    /*background-image: url('/../images/background.png');*/
 }
+
+
 /*.bar.bar-assertive {
     border-color: #993333;
     background-color: #993333;
@@ -25,15 +36,17 @@
 }*/
 
 .list .item.item-accordion {
-  line-height: 38px;
-  padding-top: 0;
-  padding-bottom: 0;
-  transition: 0.09s all linear;
+    line-height: 38px;
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: 0.09s all linear;
 }
+
 .list .item.item-accordion.ng-hide {
-  line-height: 0px;
+    line-height: 0px;
 }
+
 .list .item.item-accordion.ng-hide-add,
 .list .item.item-accordion.ng-hide-remove {
-  display: block !important;
+    display: block !important;
 }

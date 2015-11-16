@@ -5,7 +5,16 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'angular-loading-bar', 'starter.services', 'starter.controllers', 'starter.directives', 'ngCordova', 'ngGPlaces', 'ngMaterial', 'ngAnimate'])
+angular.module('starter', ['ionic', 
+  'angular-loading-bar',
+   'starter.services', 
+   'starter.controllers', 
+   'starter.directives', 
+   'ngCordova', 
+   'ngGPlaces', 
+   'ngMaterial', 
+   'ngAnimate',
+   'ng-walkthrough'])
 
 .run(function($ionicPlatform, $cordovaGeolocation, $rootScope, $http, nycHealth) {
     $ionicPlatform.ready(function() {

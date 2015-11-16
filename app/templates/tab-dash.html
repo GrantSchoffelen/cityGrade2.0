@@ -1,7 +1,7 @@
 <ion-view view-title="City Grade">
     <ion-nav-bar class="bar-assertive">
         <ion-nav-buttons side="right">
-            <md-button aria-label="menu" class="md-fab md-warn" ng-click="openFilter()">
+            <md-button aria-label="menu" id="focusItem" class="md-fab md-warn" ng-click="openFilter()">
                 <img src="images/food_icon.svg" style="width: 2em;margin-top: 26%;">
                 <md-tooltip md-direction="left">
                     Filter
@@ -61,5 +61,15 @@
                 <basic-card></basic-card> -->
             </div>
         </div>
+        <!-- walkthough <section></section> -->
+        <!-- <walkthrough
+            is-round=true
+            walkthrough-type="transparency"
+            focus-element-id="focusItem"
+            icon="arrow"
+            main-caption="click here to filter by cusine type!"
+            is-active="true"
+            use-button=true>
+        </walkthrough> -->
     </ion-content>
 </ion-view>
