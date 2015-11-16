@@ -55,7 +55,7 @@ angular.module('starter.controllers', [])
                     $mdToast.show(
                         $mdToast.simple()
                         .content('Sorry, No restaurant found with this number!')
-                        .position('bottom')
+                        .position('top')
                         .hideDelay(5000)
                     );
                 } else {
@@ -65,7 +65,17 @@ angular.module('starter.controllers', [])
         } else if ($scope.searchInputType === 'Name') {
             nycHealth.healthDataByDba(searchParam).then(function(restaurants) {
                 console.log(restaurants, 'from search name');
-                $scope.restaurantsArr = restaurants;
+                if (restaurants.length === 0) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .content('Sorry, No restaurant found with this Name in your area!')
+                        .position('top')
+                        .hideDelay(5000)
+                    );
+                } else {
+                    $scope.restaurantsArr = restaurants;
+                };
+                
             });
         }
     }
@@ -156,7 +166,7 @@ angular.module('starter.controllers', [])
                 $mdToast.show(
                     $mdToast.simple()
                     .content('Sorry, No restaurant found by this cuisine in your area!')
-                    .position('bottom')
+                    .position('top')
                     .hideDelay(5000)
                 );
             } else {
