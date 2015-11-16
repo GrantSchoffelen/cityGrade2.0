@@ -5,37 +5,40 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 
-  'angular-loading-bar',
-   'starter.services', 
-   'starter.controllers', 
-   'starter.directives', 
-   'ngCordova', 
-   'ngGPlaces', 
-   'ngMaterial', 
-   'ngAnimate',
-   'ng-walkthrough'])
+angular.module('starter', ['ionic',
+    'angular-loading-bar',
+    'starter.services',
+    'starter.controllers',
+    'starter.directives',
+    'ngCordova',
+    'ngGPlaces',
+    'ngMaterial',
+    'ngAnimate',
+    'ng-walkthrough'
+])
 
-.run(function($ionicPlatform, $cordovaGeolocation, $rootScope, $http, nycHealth) {
+.run(function($ionicPlatform, $cordovaGeolocation, $rootScope, $http, nycHealth, $ionicPopup, $ionicLoading) {
+    $ionicLoading.show({
+        template: 'Loading...',
+        hideOnStateChange: true
+    });
     $ionicPlatform.ready(function() {
-
-        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-        // for form inputs)
+        $ionicLoading.hide();
+            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+            // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
             cordova.plugins.Keyboard.disableScroll(true);
-
         }
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
-
         if (window.Connection) {
             if (navigator.connection.type == Connection.NONE) {
                 $ionicPopup.confirm({
                         title: "Internet Disconnected",
-                        content: "The internet is disconnected on your device."
+                        content: "The internet is disconnected on your device please connect to internet and try again."
                     })
                     .then(function(result) {
                         if (!result) {
@@ -44,6 +47,24 @@ angular.module('starter', ['ionic',
                     });
             }
         }
+        var posOptions = {
+            timeout: 10000,
+            enableHighAccuracy: false
+        };
+        $cordovaGeolocation
+            .getCurrentPosition(posOptions)
+            .then(function(position) {}, function(err) {
+                console.log(err)
+                $ionicPopup.confirm({
+                        title: "Location Setting Turned Off",
+                        content: "Seems like your location settings are turned off. Please check your location setting!"
+                    })
+                    .then(function(result) {
+                        if (!result) {
+                            ionic.Platform.exitApp();
+                        }
+                    });
+            })
 
     });
 })

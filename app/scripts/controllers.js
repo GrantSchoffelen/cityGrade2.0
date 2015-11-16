@@ -1,6 +1,7 @@
 angular.module('starter.controllers', [])
 
-.controller('GradesCtrl', function($scope, nycHealth, $rootScope, $cordovaGeolocation, ngGPlacesAPI, $http, $ionicModal, $mdToast) {
+.controller('GradesCtrl', function($scope, $ionicLoading, nycHealth, $rootScope, $cordovaGeolocation, ngGPlacesAPI, $http, $ionicModal, $mdToast) {
+     
     $rootScope.dataArray = [];
     if (!$rootScope.userZipcode) {
         $rootScope.userZipcode = null
@@ -179,8 +180,8 @@ angular.module('starter.controllers', [])
             // error
         },
         function(position) {
-            var lat = position.coords.latitude
-            var long = position.coords.longitude
+            var lat = position.coords.latitude;
+            var long = position.coords.longitude;
             console.log('watch', lat, long)
         });
 
