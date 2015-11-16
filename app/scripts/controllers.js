@@ -7,6 +7,10 @@ angular.module('starter.controllers', [])
         $rootScope.userZipcode = null
     };
     $scope.restaurantsArr = [];
+    $scope.showCurrentRepeat = 'location';
+    $scope.checkCurrentRepeat = function(fil) {
+      $scope.showCurrentRepeat = fil;
+    };
     $ionicModal.fromTemplateUrl('templates/singlecuisine.html', {
         scope: $scope,
         animation: 'slide-in-up'
@@ -44,7 +48,9 @@ angular.module('starter.controllers', [])
                         .hideDelay(5000)
                     );
                 } else {
-                    $scope.restaurantsArr = restaurantsByPhone;
+                  debugger
+                  $scope.showCurrentRepeat = 'filter';
+                    $scope.restaurantsByFilter = restaurantsByPhone;
                 };
             });
         } else if ($scope.searchInputType === 'Name') {
@@ -58,7 +64,8 @@ angular.module('starter.controllers', [])
                         .hideDelay(5000)
                     );
                 } else {
-                    $scope.restaurantsArr = restaurants;
+                  $scope.showCurrentRepeat = 'filter';
+                    $scope.restaurantsByFilter = restaurants;
                 };
                 
             });
@@ -164,7 +171,8 @@ angular.module('starter.controllers', [])
                     .hideDelay(5000)
                 );
             } else {
-                $scope.restaurantsArr = grades;
+                  $scope.showCurrentRepeat = 'filter';
+                $scope.restaurantsByFilter = grades;
             }
         })
     }

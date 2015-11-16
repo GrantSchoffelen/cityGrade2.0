@@ -22,14 +22,14 @@
       </div>
 
       <ion-list>
-        <div ng-repeat="violation in currentRestaurant">
+        <div ng-repeat="violation in currentRestaurant | orderBy: '-inspection_date'">
           <ion-item class="item-stable" layout="row" ng-class="{active: isViolationShown($index)}" ng-click="toggleViolation($index)">
           <i flex="5" class="icon" ng-class="isViolationShown($index) ? 'ion-minus' : 'ion-plus'"></i>
-            <span flex="90" style="padding-left: 2%;">{{violation.inspection_type}}</span>
-            <span>{{violation.score}}</span>
+            <span flex="85" style="padding-left: 2%;">{{violation.inspection_type}}</span>
+            <span>{{violation.inspection_date | date:'MM/yy'}}</span>
           </ion-item>
           <md-content class="md-padding" ng-show="isViolationShown($index)">
-            <h4><span style="color:#4a87ee">Inspection on: </span>{{violation.inspection_date | date: 'short'}}</h4>
+            <h4 layout="row" layout-align="space-around center"><span style="color:#4a87ee">Inspection on: </span><span>{{violation.inspection_date | date: 'short'}}</span></h4>
             <h5 style="color:#4a87ee">Violation Cited:</h5>
             {{violation.violation_description}}
           </md-content>

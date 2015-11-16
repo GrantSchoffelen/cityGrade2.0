@@ -5,7 +5,7 @@ angular.module('starter.services', [])
 
     function putInRightFormat(dat) {
         var restaurantsArr = [];
-        var rests = dat.data || dat;
+        var rests = dat.data ? dat.data : dat;
         angular.forEach(rests, function(key, val) {
             if (restaurantsArr.length === 0) {
                 restaurantsArr.push([key]);

@@ -3,20 +3,22 @@
         <ion-nav-buttons side="right">
             <md-button aria-label="menu" id="focusItem" class="md-fab md-warn" ng-click="openFilter()">
                 <img src="images/food_icon.svg" style="width: 2em;margin-top: 26%;">
-                <md-tooltip md-direction="left">
-                    Filter
-                </md-tooltip>
+            </md-button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="left">
+            <md-button style="padding: 0;margin: 0;" ng-click="checkCurrentRepeat('location')" layout="row">
+            home
             </md-button>
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content class="padding">
-    <form name='searchByText'>
-        <div class="list list-inset" style="margin-bottom: 5px;">
-            <label class="item item-input">
-                <i class="icon ion-search placeholder-icon"></i>
-                <input required type="text" name="input" ng-model="SearchByInput" placeholder="Search by Restraunt {{searchInputType}}">
-            </label>
-        </div>
+        <form name='searchByText'>
+            <div class="list list-inset" style="margin-bottom: 5px;padding-top: 0;margin-top: 0;">
+                <label class="item item-input">
+                    <i class="icon ion-search placeholder-icon"></i>
+                    <input required type="text" name="input" ng-model="SearchByInput" placeholder="Search by Restraunt {{searchInputType}}">
+                </label>
+            </div>
         </form>
         <div layout="row">
             <md-menu flex>
@@ -31,7 +33,7 @@
                                 Restaurant Name
                             </md-button>
                             <label flex class="checkbox">
-                                <input  ng-checked="searchInputType === 'Name'" type="checkbox">
+                                <input ng-checked="searchInputType === 'Name'" type="checkbox">
                             </label>
                         </div>
                     </md-menu-item>
@@ -41,8 +43,8 @@
                                 <md-icon style="margin: 0;padding: 0;margin-top: -11px;font-size: 22px;color: #e42012;" md-menu-align-target class="icon ion-ios-telephone placeholder-icon"></md-icon>
                                 Restaurant Phone #
                             </md-button>
-                             <label  flex class="checkbox">
-                                <input  ng-checked="searchInputType === 'Phone #'"type="checkbox">
+                            <label flex class="checkbox">
+                                <input ng-checked="searchInputType === 'Phone #'" type="checkbox">
                             </label>
                         </div>
                     </md-menu-item>
@@ -53,12 +55,12 @@
             </button>
         </div>
         <div>
-            <div ng-click="openSingleRestaurant(restaurant)" ng-if="restaurant.length !== 0 " ng-repeat="restaurant in restaurantsArr | orderBy: 'length'">
+            <div ng-click="openSingleRestaurant(restaurant)" ng-show="restaurant.length !== 0 && showCurrentRepeat === 'location'" ng-repeat="restaurant in restaurantsArr | orderBy: 'restaurant[0].score'">
                 <basic-card></basic-card>
             </div>
             <!-- for restaurants by zip -->
-           <!--  <div ng-click="openSingleRestaurant(restaurant)" ng-if="restaurantsByCuisine" ng-repeat="restaurant in restaurantsByCuisine | orderBy: 'length'">
-                <basic-card></basic-card> -->
+            <div ng-click="openSingleRestaurant(restaurant)" ng-show="restaurantsByFilter && showCurrentRepeat === 'filter'" ng-repeat="restaurant in restaurantsByFilter | orderBy: 'score'">
+                <basic-card></basic-card>
             </div>
         </div>
         <!-- walkthough <section></section> -->
