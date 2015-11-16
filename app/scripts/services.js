@@ -1,6 +1,28 @@
 angular.module('starter.services', [])
 
 .factory('nycHealth', function($http, ngGPlacesAPI, ngGPlacesAPI, $cordovaGeolocation, $rootScope, $q) {
+    var nycUrl = 'https://data.cityofnewyork.us/resource/9w7m-hzhe.json?'
+
+    function putInRightFormat(dat) {
+        var restaurantsArr = [];
+        var rests = dat.data || dat;
+        angular.forEach(rests, function(key, val) {
+            if (restaurantsArr.length === 0) {
+                restaurantsArr.push([key]);
+            } else {
+                index = findBycamis(restaurantsArr, key.camis);
+                if (index !== null && index !== undefined) {
+                    restaurantsArr[index].push(key);
+                } else {
+                    if (key.camis) {
+                        restaurantsArr.push([key]);
+                    }
+                }
+            };
+        });
+        return restaurantsArr;
+    }
+
     function findBycamis(source, camis) {
         var value;
         angular.forEach(source, function(key, val) {
@@ -14,6 +36,47 @@ angular.module('starter.services', [])
     return {
         findBy: function(source, camis) {
             return findBycamis(source, camis);
+        },
+        formatRestraunts: function(dat) {
+            return putInRightFormat(dat);
+        },
+        reverseGeoCode: function(lat, long) {
+            return $http.get('https://www.geocode.farm/v3/json/reverse/?lat=' + lat + '&lon=' + long + '&country=us&lang=en&count=1').then(function(address) {
+                console.log(address)
+                return address.data.geocoding_results.RESULTS[0];
+            })
+        },
+        healthDataByZip: function(zip) {
+            var getUrl = nycUrl + 'zipcode=' + zip;
+            return $http.get(getUrl)
+                .then(function(dat) {
+                    return putInRightFormat(dat);
+                }).catch(function(err) {}).finally(function() {})
+        },
+        healthDataByGrade: function(grade, zipcode) {
+            var getUrl = nycUrl + 'zipcode=' + zip + '&grade='
+            grade;
+            return $http.get(getUrl)
+                .then(function(dat) {
+                    var restaurantsByZip = [];
+                    var rests = dat.data;
+                    angular.forEach(rests, function(key, val) {
+                        if (restaurantsByZip.length === 0) {
+                            restaurantsByZip.push([key]);
+                        } else {
+                            index = findBycamis(restaurantsByZip, key.camis);
+                            if (index !== null && index !== undefined) {
+                                restaurantsByZip[index].push(key);
+                            } else {
+                                if (key.camis) {
+                                    restaurantsByZip.push([key]);
+                                }
+                            }
+                        };
+                    });
+                    return restaurantsByZip;
+                }).catch(function(err) {}).finally(function() {})
+
         },
         healthDataByPhone: function(el) {
             var cityOpenDataUrl = 'https://data.cityofnewyork.us/resource/9w7m-hzhe.json?phone=';
@@ -42,47 +105,14 @@ angular.module('starter.services', [])
             var getUrl = cityOpenDataUrl + el.toUpperCase();
             return $http.get(getUrl)
                 .then(function(dat) {
-                    var restaurantsByDba = [];
-                    var rests = dat.data;
-
-                    angular.forEach(rests, function(key, val) {
-                        if (restaurantsByDba.length === 0) {
-                            restaurantsByDba.push([key]);
-                        } else {
-                            index = findBycamis(restaurantsByDba, key.camis);
-                            if (index !== null && index !== undefined) {
-                                restaurantsByDba[index].push(key);
-                            } else {
-                                if (key.camis) {
-                                    restaurantsByDba.push([key]);
-                                }
-                            }
-                        };
-                    });
-                    return restaurantsByDba;
+                    return putInRightFormat(dat);
                 }).catch(function(err) {}).finally(function() {})
         },
         healthDataByCuisine: function(cuisine, zipcode) {
             var url = 'https://data.cityofnewyork.us/resource/9w7m-hzhe.json?zipcode=' + zipcode + '&cuisine_description=' + cuisine;
             return $http.get(url)
                 .then(function(dat) {
-                    var restaurantsByCusine = [];
-                    var rests = dat.data;
-                    angular.forEach(rests, function(key, val) {
-                        if (restaurantsByCusine.length === 0) {
-                            restaurantsByCusine.push([key]);
-                        } else {
-                            index = findBycamis(restaurantsByCusine, key.camis);
-                            if (index !== null && index !== undefined) {
-                                restaurantsByCusine[index].push(key);
-                            } else {
-                                if (key.camis) {
-                                    restaurantsByCusine.push([key]);
-                                }
-                            }
-                        };
-                    });
-                    return restaurantsByCusine;
+                    return putInRightFormat(dat);
                 }).catch(function(err) {
                     console.log(err);
                 }).finally(function() {})

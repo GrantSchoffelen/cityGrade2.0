@@ -35,22 +35,7 @@ angular.module('starter.controllers', [])
         var searchParam = $scope.SearchByInput || inputedText;
         if ($scope.searchInputType === 'Phone #') {
             nycHealth.healthDataByPhone(searchParam).then(function(restaurants) {
-                var restaurantsByPhone = [];
-                var rests = restaurants;
-                angular.forEach(rests, function(key, val) {
-                    if (restaurantsByPhone.length === 0) {
-                        restaurantsByPhone.push([key]);
-                    } else {
-                        index = nycHealth.findBy(restaurantsByPhone, key.camis);
-                        if (index !== null && index !== undefined) {
-                            restaurantsByPhone[index].push(key);
-                        } else {
-                            if (key.camis) {
-                                restaurantsByPhone.push([key]);
-                            }
-                        }
-                    };
-                });
+              var restaurantsByPhone = nycHealth.formatRestraunts(restaurants)
                 if (restaurantsByPhone.length === 0) {
                     $mdToast.show(
                         $mdToast.simple()
@@ -107,6 +92,15 @@ angular.module('starter.controllers', [])
         .then(function(position) {
             $rootScope.lat = position.coords.latitude;
             $rootScope.long = position.coords.longitude;
+            nycHealth.reverseGeoCode($rootScope.lat, $rootScope.long).then(function(address) {
+              $rootScope.userZipcode = address.ADDRESS.postal_code;
+              nycHealth.healthDataByZip($rootScope.userZipcode).then(function(rests) {
+                angular.forEach(rests, function(key, val) {
+                $scope.restaurantsArr.push(key);
+                  
+                })
+              })
+            })
             nycHealth.localRestraunts($rootScope.lat, $rootScope.long).then(function(rests) {
                 angular.forEach(rests, function(key, val) {
                     nycHealth.localRestrauntsMoreInfo(key).then(function(rest) {
@@ -114,7 +108,7 @@ angular.module('starter.controllers', [])
                             $rootScope.userZipcode = rest.formatted_address.match(/[0-9]{5}/g);
                         }
                         nycHealth.healthDataByPhone(rest).then(function(grade) {
-                            $scope.restaurantsArr.push(grade);
+                            $scope.restaurantsArr.unshift(grade);
                         })
                     });
                 });
@@ -172,8 +166,6 @@ angular.module('starter.controllers', [])
             } else {
                 $scope.restaurantsArr = grades;
             }
-            console.log($scope.restaurantsByCuisine);
-
         })
     }
 
