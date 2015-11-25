@@ -50,3 +50,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', end
 .list .item.item-accordion.ng-hide-remove {
     display: block !important;
 }
+md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
+        min-height: 70vh;
+}

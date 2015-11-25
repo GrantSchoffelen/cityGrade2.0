@@ -1,15 +1,16 @@
 angular.module('starter.controllers', [])
 
 .controller('GradesCtrl', function($scope, $ionicLoading, nycHealth, $rootScope, $cordovaGeolocation, ngGPlacesAPI, $http, $ionicModal, $mdToast) {
-     
+
     $rootScope.dataArray = [];
     if (!$rootScope.userZipcode) {
         $rootScope.userZipcode = null
     };
     $scope.restaurantsArr = [];
+    $scope.cuisineArr = [];
     $scope.showCurrentRepeat = 'location';
     $scope.checkCurrentRepeat = function(fil) {
-      $scope.showCurrentRepeat = fil;
+        $scope.showCurrentRepeat = fil;
     };
     $ionicModal.fromTemplateUrl('templates/singlecuisine.html', {
         scope: $scope,
@@ -39,7 +40,7 @@ angular.module('starter.controllers', [])
         var searchParam = $scope.SearchByInput || inputedText;
         if ($scope.searchInputType === 'Phone #') {
             nycHealth.healthDataByPhone(searchParam).then(function(restaurants) {
-              var restaurantsByPhone = nycHealth.formatRestraunts(restaurants)
+                var restaurantsByPhone = nycHealth.formatRestraunts(restaurants)
                 if (restaurantsByPhone.length === 0) {
                     $mdToast.show(
                         $mdToast.simple()
@@ -48,8 +49,8 @@ angular.module('starter.controllers', [])
                         .hideDelay(5000)
                     );
                 } else {
-                  debugger
-                  $scope.showCurrentRepeat = 'filter';
+                    debugger
+                    $scope.showCurrentRepeat = 'filter';
                     $scope.restaurantsByFilter = restaurantsByPhone;
                 };
             });
@@ -64,10 +65,10 @@ angular.module('starter.controllers', [])
                         .hideDelay(5000)
                     );
                 } else {
-                  $scope.showCurrentRepeat = 'filter';
+                    $scope.showCurrentRepeat = 'filter';
                     $scope.restaurantsByFilter = restaurants;
                 };
-                
+
             });
         }
     }
@@ -100,13 +101,16 @@ angular.module('starter.controllers', [])
             $rootScope.lat = position.coords.latitude;
             $rootScope.long = position.coords.longitude;
             nycHealth.reverseGeoCode($rootScope.lat, $rootScope.long).then(function(address) {
-              $rootScope.userZipcode = address.ADDRESS.postal_code;
-              nycHealth.healthDataByZip($rootScope.userZipcode).then(function(rests) {
-                angular.forEach(rests, function(key, val) {
-                $scope.restaurantsArr.push(key);
-                  
+                $rootScope.userZipcode = address.ADDRESS.postal_code;
+                nycHealth.healthDataByZip($rootScope.userZipcode).then(function(rests) {
+                    angular.forEach(rests, function(key, val) {
+                        $scope.restaurantsArr.push(key);
+                        angular.forEach($scope.restaurantsArr, function(key, val) {
+                            $scope.cuisineArr.push(key[0]);
+                        })
+
+                    })
                 })
-              })
             })
             nycHealth.localRestraunts($rootScope.lat, $rootScope.long).then(function(rests) {
                 angular.forEach(rests, function(key, val) {
@@ -120,6 +124,7 @@ angular.module('starter.controllers', [])
                     });
                 });
             })
+
         }, function(err) {
             console.log(err)
             alert('Seems like your location settings are turned off. Please check your location setting!')
@@ -171,7 +176,7 @@ angular.module('starter.controllers', [])
                     .hideDelay(5000)
                 );
             } else {
-                  $scope.showCurrentRepeat = 'filter';
+                $scope.showCurrentRepeat = 'filter';
                 $scope.restaurantsByFilter = grades;
             }
         })

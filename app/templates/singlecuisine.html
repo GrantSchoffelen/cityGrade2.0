@@ -29,7 +29,7 @@
             <span>{{violation.inspection_date | date:'MM/yy'}}</span>
           </ion-item>
           <md-content class="md-padding" ng-show="isViolationShown($index)">
-            <h4 layout="row" layout-align="space-around center"><span style="color:#4a87ee">Inspection on: </span><span>{{violation.inspection_date | date: 'short'}}</span></h4>
+            <h4 layout="row" ><span flex="50" style="color:#4a87ee">Inspection on: </span><span flex>{{violation.inspection_date | date: 'short'}}</span></h4>
             <h5 style="color:#4a87ee">Violation Cited:</h5>
             {{violation.violation_description}}
           </md-content>

@@ -14,6 +14,7 @@ angular.module('starter', ['ionic',
     'ngGPlaces',
     'ngMaterial',
     'ngAnimate',
+    'angular.filter',
     'ng-walkthrough'
 ])
 
