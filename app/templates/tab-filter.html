@@ -1,15 +1,27 @@
 <ion-modal-view>
-  <ion-header-bar align-title="center" class="bar-positive">
-    <div class="buttons"></div>
-    <h1 class="title">Food Categories</h1>
-    <div class="buttons">
-      <button class="button" ng-click="closeFilter()">Close</button>
-    </div>
-  </ion-header-bar>
-  <ion-content >
-    <md-card ng-click="getLocationsByCuisine(cuisine)" ng-repeat="cuisine in cuisines" ng-style="{'background-image': 'url(' + cuisine.image + ')'}" style="height: 7em;background-repeat: no-repeat;background-size: cover;">
+    <ion-header-bar align-title="center" class="bar-positive">
+        <div class="buttons"></div>
+        <h1 class="title">Food Categories</h1>
+        <div class="buttons">
+            <button class="button" ng-click="closeFilter()">Close</button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <!--   <md-card ng-click="getLocationsByCuisine(cuisine)" ng-repeat="cuisine in cuisines" ng-style="{'background-image': 'url(' + cuisine.image + ')'}" style="height: 7em;background-repeat: no-repeat;background-size: cover;">
       <h2 style="text-align:center;color:white">{{cuisine.name}}</h2>
-      <!-- <img ng-src="images/{{cuisine}}.jpeg"> -->
-    </md-card>
-  </ion-content>
+    </md-card> -->
+        <md-card>
+            <!-- Group name: {{ cuisine }}, length: {{ value }} -->
+            <div ng-repeat="(cuisine, number) in cuisineArr | countBy: 'cuisine_description' | orderBy: value">
+            <div layout="row" ng-if="cuisine !== 'undefined'" ng-click="getLocationsByCuisine(cuisine)" style="padding: 10px 15px 10px 30px;"> 
+                 <img flex="10" style="height: 41px;margin-right: 10px;margin-top: 10px;" src="images/tupperware.svg" alt="">
+                 <div flex layout="column">
+                  <h4 flex style="color:black;margin-bottom: 0;"> {{cuisine}}</h4>
+                  <h6 flex style="color:black;margin-top: 0;"> There are <span style="color: rgb(244,67,54);font-size: 14px;">{{number}}</span> Restraunt(s) in your area.</h6>
+                  </div>
+            </div>
+            <md-divider></md-divider>
+            </div>
+        </md-card>
+    </ion-content>
 </ion-modal-view>
