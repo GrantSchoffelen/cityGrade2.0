@@ -49,7 +49,6 @@ angular.module('starter.controllers', [])
                         .hideDelay(5000)
                     );
                 } else {
-                    debugger
                     $scope.showCurrentRepeat = 'filter';
                     $scope.restaurantsByFilter = restaurantsByPhone;
                 };
@@ -109,7 +108,9 @@ angular.module('starter.controllers', [])
                             $scope.cuisineArr.push(key[0]);
                         })
 
-                    })
+                    });
+                    console.log($scope.cuisineArr)
+
                 })
             })
             nycHealth.localRestraunts($rootScope.lat, $rootScope.long).then(function(rests) {
@@ -166,7 +167,7 @@ angular.module('starter.controllers', [])
     }]
     $scope.getLocationsByCuisine = function(cuisine) {
         $scope.restaurantsByCuisine = [];
-        nycHealth.healthDataByCuisine(cuisine.name, $rootScope.userZipcode).then(function(grades) {
+        nycHealth.healthDataByCuisine(cuisine, $rootScope.userZipcode).then(function(grades) {
             $scope.closeFilter();
             if (grades.length === 0) {
                 $mdToast.show(
