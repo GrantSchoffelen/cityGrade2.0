@@ -26,6 +26,10 @@ angular.module('starter.controllers', [])
     $scope.closeSingleRestaurant = function() {
         $scope.singleRestaurant.hide();
     };
+    //get random images
+    $scope.randomImg = function () {
+      return Math.floor(Math.random() * 5) + 1;
+    }
     //Cleanup the modal when we're done with it!
     $scope.$on('$destroy', function() {
         $scope.singleRestaurant.remove();
@@ -184,7 +188,7 @@ angular.module('starter.controllers', [])
     }
 
     var watchOptions = {
-        frequency: 1000,
+        frequency: 2000,
         timeout: 3000,
         enableHighAccuracy: false
     };

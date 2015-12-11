@@ -135,7 +135,7 @@ angular.module('starter', ['ionic',
     //   }
     // });
     cfpLoadingBarProvider.includeBar = false;
-    cfpLoadingBarProvider.spinnerTemplate = '<div style="position:absolute; z-index:10000; margin:49%"><img src="images/spinner.svg"></div>';
+    cfpLoadingBarProvider.spinnerTemplate = '<div style="position:absolute; z-index:10000; margin:45%"><img src="images/spinner.svg"></div>';
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/tab/dash');
 
