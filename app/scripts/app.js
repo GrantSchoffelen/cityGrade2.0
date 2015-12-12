@@ -25,8 +25,8 @@ angular.module('starter', ['ionic',
     });
     $ionicPlatform.ready(function() {
         $ionicLoading.hide();
-            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-            // for form inputs)
+        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+        // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
             cordova.plugins.Keyboard.disableScroll(true);
@@ -42,37 +42,32 @@ angular.module('starter', ['ionic',
                         content: "The internet is disconnected on your device please connect to internet and try again."
                     })
                     .then(function(result) {
-                        if (!result) {
+                        if (ionic.Platform.isAndroid()) {
                             ionic.Platform.exitApp();
                         }
                     });
             }
         }
-        cordova.plugins.diagnostic.isLocationEnabled(function(el) {
-            aler(el, 'location enabled')
-        };, function(err) {
-            alert(err, 'location disabled')
-        };);
 
-        var posOptions = {
-            timeout: 100,
-            enableHighAccuracy: false
-        };
-        $cordovaGeolocation
-            .getCurrentPosition(posOptions)
-            .then(function(position) {}, function(err) {
-                console.log(err)
-                // alert('Seems like your location settings are turned off. Please check your location setting!')
-                $ionicPopup.confirm({
-                        title: "Location Setting Turned Off",
-                        content: "Seems like your location settings are turned off. Please check your location setting!"
-                    })
-                    .then(function(result) {
-                        if (!result) {
-                            ionic.Platform.exitApp();
-                        }
-                    });
-            })
+        // var posOptions = {
+        //     timeout: 100,
+        //     enableHighAccuracy: false
+        // };
+        // $cordovaGeolocation
+        //     .getCurrentPosition(posOptions)
+        //     .then(function(position) {}, function(err) {
+        //         console.log(err)
+        //             // alert('Seems like your location settings are turned off. Please check your location setting!')
+        //         $ionicPopup.confirm({
+        //                 title: "Location Setting Turned Off",
+        //                 content: "Seems like your location settings are turned off. Please check your location setting!"
+        //             })
+        //             .then(function(result) {
+        //                 if (!result) {
+        //                     ionic.Platform.exitApp();
+        //                 }
+        //             });
+        //     })
 
     });
 })
@@ -85,8 +80,6 @@ angular.module('starter', ['ionic',
     // Set up the various states which the app can be in.
     // Each state's controller can be found in controllers.js
     $stateProvider
-
-    // setup an abstract state for the tabs directive
         .state('tab', {
         url: '/tab',
         abstract: true,
@@ -100,17 +93,45 @@ angular.module('starter', ['ionic',
         views: {
             'tab-dash': {
                 templateUrl: 'templates/tab-dash.html',
-                controller: 'GradesCtrl'
+                controller: 'GradesCtrl',
+                // resolve: {
+                //     currentLocation: function($q, $cordovaGeolocation,  $ionicPopup) {
+                //         var q = $q.defer();
+                //         var latLong;
+                //         var posOptions = {
+                //             timeout: 100,
+                //             enableHighAccuracy: false
+                //         };
+                //         $cordovaGeolocation
+                //             .getCurrentPosition(posOptions)
+                //             .then(function(position) {
+                //                 var lat = position.coords.latitude
+                //                 var long = position.coords.longitude
+                //                 latLong = {
+                //                     'lat': lat,
+                //                     'long': long
+                //                 }
+                //                 q.resolve(latLong);
+                //             }, function(err) {
+                //                 latLong = null
+                //                 $ionicPopup.confirm({
+                //                         title: "Location Setting Turned Off",
+                //                         content: "Seems like your location settings are turned off. Please check your location setting!"
+                //                     })
+                //                     .then(function(result) {
+                //                         console.log(result)
+                //                         if (ionic.Platform.isAndroid()) {
+                //                             ionic.Platform.exitApp();
+                //                         }
+                //                         q.reject('Failed to Get Lat Long')
+
+                //                     });
+                //             });
+                //         return q.promise;
+                //     }
+                // }
             }
         }
-
-        //,
-        // resolve: {
-        //   message: function(nycHealth) {
-        //     console.log(nycHealth.init());
-        //     return nycHealth.init()
-        //   }
-        // }
     })
 
     // .state('tab.chats', {

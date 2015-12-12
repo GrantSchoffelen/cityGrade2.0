@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('GradesCtrl', function($scope, $ionicLoading, nycHealth, $rootScope, $cordovaGeolocation, ngGPlacesAPI, $http, $ionicModal, $mdToast) {
+.controller('GradesCtrl', function($scope, $ionicLoading, nycHealth, $rootScope, $cordovaGeolocation, ngGPlacesAPI, $http, $ionicModal, $mdToast, $ionicPopup) {
 
     $rootScope.dataArray = [];
     if (!$rootScope.userZipcode) {
@@ -27,10 +27,10 @@ angular.module('starter.controllers', [])
         $scope.singleRestaurant.hide();
     };
     //get random images
-    $scope.randomImg = function () {
-      return Math.floor(Math.random() * 5) + 1;
-    }
-    //Cleanup the modal when we're done with it!
+    $scope.randomImg = function() {
+            return Math.floor(Math.random() * 5) + 1;
+        }
+        //Cleanup the modal when we're done with it!
     $scope.$on('$destroy', function() {
         $scope.singleRestaurant.remove();
     });
@@ -132,8 +132,20 @@ angular.module('starter.controllers', [])
 
         }, function(err) {
             console.log(err)
-            alert('Seems like your location settings are turned off. Please check your location setting!')
+                // alert('Seems like your location settings are turned off. Please check your location setting!')
                 // error
+            $ionicPopup.confirm({
+                    title: "Location Setting Turned Off",
+                    content: "Seems like your location settings are turned off. Please check your location setting!"
+                })
+                .then(function(result) {
+                    console.log(result)
+                    if (ionic.Platform.isAndroid()) {
+                        ionic.Platform.exitApp();
+                    }
+                    // q.reject('Failed to Get Lat Long')
+
+                });
         });
 
     $scope.toggleViolation = function(index) {
@@ -187,23 +199,23 @@ angular.module('starter.controllers', [])
         })
     }
 
-    var watchOptions = {
-        frequency: 2000,
-        timeout: 3000,
-        enableHighAccuracy: false
-    };
+    // var watchOptions = {
+    //     frequency: 2000,
+    //     timeout: 3000,
+    //     enableHighAccuracy: false
+    // };
 
-    var watch = $cordovaGeolocation.watchPosition(watchOptions);
-    watch.then(
-        null,
-        function(err) {
-            // error
-        },
-        function(position) {
-            var lat = position.coords.latitude;
-            var long = position.coords.longitude;
-            console.log('watch', lat, long)
-        });
+    // var watch = $cordovaGeolocation.watchPosition(watchOptions);
+    // watch.then(
+    //     null,
+    //     function(err) {
+    //         // error
+    //     },
+    //     function(position) {
+    //         var lat = position.coords.latitude;
+    //         var long = position.coords.longitude;
+    //         console.log('watch', lat, long)
+    //     });
 
 
 })
