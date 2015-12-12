@@ -48,14 +48,21 @@ angular.module('starter', ['ionic',
                     });
             }
         }
+        cordova.plugins.diagnostic.isLocationEnabled(function(el) {
+            aler(el, 'location enabled')
+        };, function(err) {
+            alert(err, 'location disabled')
+        };);
+
         var posOptions = {
-            timeout: 10000,
+            timeout: 100,
             enableHighAccuracy: false
         };
         $cordovaGeolocation
             .getCurrentPosition(posOptions)
             .then(function(position) {}, function(err) {
                 console.log(err)
+                // alert('Seems like your location settings are turned off. Please check your location setting!')
                 $ionicPopup.confirm({
                         title: "Location Setting Turned Off",
                         content: "Seems like your location settings are turned off. Please check your location setting!"
