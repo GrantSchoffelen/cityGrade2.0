@@ -59,39 +59,6 @@
             </div>
         </form>
         <div>
-         <!--    <md-tabs style="height: 100vh;background: transparent;">
-                <md-tab>
-                    <md-tab-label>
-                        NearBy
-                    </md-tab-label>
-                    <md-tab-body >
-                    <md-content style="background-color: transparent;">
-                        <div on-tap="openSingleRestaurant(restaurant)" ng-show="restaurant.length !== 0 && showCurrentRepeat === 'location'" ng-repeat="restaurant in restaurantsArr | orderBy: 'restaurant[0].score' | limitTo: 50">
-                            <basic-card></basic-card>
-                        </div>
-                        <div on-tap="openSingleRestaurant(restaurant)" ng-show="restaurantsByFilter && showCurrentRepeat === 'filter'" ng-repeat="restaurant in restaurantsByFilter | orderBy: 'score'">
-                            <basic-card></basic-card>
-                        </div>
-                    </md-content>
-                    </md-tab-body> 
-                </md-tab>
-
-                <md-tab  ng-repeat="(key, value) in cuisineArr | groupBy: 'cusine_discriptio'">
-                    <md-tab-label>
-                       sups
-                    </md-tab-label>
-                    <md-tab-body >
-                    <md-content>
-                        <div on-tap="openSingleRestaurant(restaurant)" ng-show="restaurant.length !== 0 && showCurrentRepeat === 'location'" ng-repeat="restaurant in restaurantsArr | orderBy: 'restaurant[0].score'">
-                            <basic-card></basic-card>
-                        </div>
-                        <div on-tap="openSingleRestaurant(restaurant)" ng-show="restaurantsByFilter && showCurrentRepeat === 'filter'" ng-repeat="restaurant in restaurantsByFilter | orderBy: 'score'">
-                            <basic-card></basic-card>
-                        </div>
-                        </md-content>
-                    </md-tab-body> 
-                </md-tab>
-            </md-tabs> -->
             <div on-tap="openSingleRestaurant(restaurant)" ng-show="restaurant.length !== 0 && showCurrentRepeat === 'location'" ng-repeat="restaurant in restaurantsArr track by $index | orderBy: 'restaurant[0].score'" ng-animate="'animate'">
                 <basic-card></basic-card>
             </div>

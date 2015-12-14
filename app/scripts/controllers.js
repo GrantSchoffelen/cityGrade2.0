@@ -11,7 +11,8 @@ angular.module('starter.controllers', [])
     $ionicModal,
     $mdToast,
     $ionicPopup,
-    $cordovaScreenshot) {
+    $cordovaScreenshot,
+    $cordovaSocialSharing) {
     console.log(currentLocation, 'here is the current location')
     $rootScope.lat = currentLocation.lat;
     $rootScope.long = currentLocation.long;
@@ -189,7 +190,17 @@ angular.module('starter.controllers', [])
         })
     };
     $scope.shareThisRes = function() {
-        console.log($cordovaScreenshot.capture('share'))
+        var imageUri = $cordovaScreenshot.capture('share');
+        $cordovaSocialSharing
+        .share(null, null, imageUri)
+         .then(function(result) {
+      // Success!
+      console.log(result, 'succ')
+    }, function(err) {
+      console.log(err, 'succ')
+        
+      // An error occured. Show a message to the user
+    });
     }
 
     // var watchOptions = {
