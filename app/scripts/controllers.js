@@ -1,7 +1,20 @@
 angular.module('starter.controllers', [])
 
-.controller('GradesCtrl', function($scope, $ionicLoading, nycHealth, $rootScope, $cordovaGeolocation, ngGPlacesAPI, $http, $ionicModal, $mdToast, $ionicPopup) {
-
+.controller('GradesCtrl', function($scope,
+    currentLocation,
+    $ionicLoading,
+    nycHealth,
+    $rootScope,
+    $cordovaGeolocation,
+    ngGPlacesAPI,
+    $http,
+    $ionicModal,
+    $mdToast,
+    $ionicPopup,
+    $cordovaScreenshot) {
+    console.log(currentLocation, 'here is the current location')
+    $rootScope.lat = currentLocation.lat;
+    $rootScope.long = currentLocation.long;
     $rootScope.dataArray = [];
     if (!$rootScope.userZipcode) {
         $rootScope.userZipcode = null
@@ -94,59 +107,37 @@ angular.module('starter.controllers', [])
     });
     //set the default options for the ngPlacesApi
 
-    var posOptions = {
-        timeout: 1000,
-        enableHighAccuracy: false
-    };
-    $cordovaGeolocation
-        .getCurrentPosition(posOptions)
-        .then(function(position) {
-            $rootScope.lat = position.coords.latitude;
-            $rootScope.long = position.coords.longitude;
-            nycHealth.reverseGeoCode($rootScope.lat, $rootScope.long).then(function(address) {
-                $rootScope.userZipcode = address.ADDRESS.postal_code;
-                nycHealth.healthDataByZip($rootScope.userZipcode).then(function(rests) {
-                    angular.forEach(rests, function(key, val) {
-                        $scope.restaurantsArr.push(key);
-                        angular.forEach($scope.restaurantsArr, function(key, val) {
-                            $scope.cuisineArr.push(key[0]);
-                        })
-
-                    });
-                    console.log($scope.cuisineArr)
-
-                })
-            })
-            nycHealth.localRestraunts($rootScope.lat, $rootScope.long).then(function(rests) {
+    // var posOptions = {
+    //     timeout: 10000,
+    //     enableHighAccuracy: false
+    // };
+    var init = function(lat, long) {
+        nycHealth.reverseGeoCode(lat, long).then(function(address) {
+            $rootScope.userZipcode = address.ADDRESS.postal_code;
+            nycHealth.healthDataByZip($rootScope.userZipcode).then(function(rests) {
                 angular.forEach(rests, function(key, val) {
-                    nycHealth.localRestrauntsMoreInfo(key).then(function(rest) {
-                        if (!$rootScope.userZipcode) {
-                            $rootScope.userZipcode = rest.formatted_address.match(/[0-9]{5}/g);
-                        }
-                        nycHealth.healthDataByPhone(rest).then(function(grade) {
-                            $scope.restaurantsArr.unshift(grade);
-                        })
-                    });
+                    $scope.restaurantsArr.push(key);
+                    angular.forEach($scope.restaurantsArr, function(key, val) {
+                        $scope.cuisineArr.push(key[0]);
+                    })
                 });
+                console.log($scope.cuisineArr)
             })
-
-        }, function(err) {
-            console.log(err)
-                // alert('Seems like your location settings are turned off. Please check your location setting!')
-                // error
-            $ionicPopup.confirm({
-                    title: "Location Setting Turned Off",
-                    content: "Seems like your location settings are turned off. Please check your location setting!"
-                })
-                .then(function(result) {
-                    console.log(result)
-                    if (ionic.Platform.isAndroid()) {
-                        ionic.Platform.exitApp();
+        })
+        nycHealth.localRestraunts(lat, long).then(function(rests) {
+            angular.forEach(rests, function(key, val) {
+                nycHealth.localRestrauntsMoreInfo(key).then(function(rest) {
+                    if (!$rootScope.userZipcode) {
+                        $rootScope.userZipcode = rest.formatted_address.match(/[0-9]{5}/g);
                     }
-                    // q.reject('Failed to Get Lat Long')
-
+                    nycHealth.healthDataByPhone(rest).then(function(grade) {
+                        $scope.restaurantsArr.unshift(grade);
+                    })
                 });
-        });
+            });
+        })
+    };
+    init($rootScope.lat, $rootScope.long);
 
     $scope.toggleViolation = function(index) {
         if ($scope.isViolationShown(index)) {
@@ -158,7 +149,6 @@ angular.module('starter.controllers', [])
     $scope.isViolationShown = function(index) {
         return $scope.shownViolation === index;
     };
-    //  $scope.cuisines = ['Thai', 'Bakery', 'American', 'Jewish/Kosher', 'Delicatessen', 'Chinese', 'Hotdog', 'Ice Cream, Gelato, Yogurt, Ices', 'Chicken', 'Turkish', 'Carribbean', 'Donuts', 'Sandwiches/Salads/Mixed Buffet', 'Hamburgers']
     $scope.cuisines = [{
         name: 'Thai',
         image: 'images/thai.png'
@@ -197,6 +187,9 @@ angular.module('starter.controllers', [])
                 $scope.restaurantsByFilter = grades;
             }
         })
+    };
+    $scope.shareThisRes = function() {
+        console.log($cordovaScreenshot.capture('share'))
     }
 
     // var watchOptions = {

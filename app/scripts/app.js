@@ -15,7 +15,9 @@ angular.module('starter', ['ionic',
     'ngMaterial',
     'ngAnimate',
     'angular.filter',
-    'ng-walkthrough'
+    'ng-walkthrough',
+    'ionic.utils',
+    'ionic.screenshot'
 ])
 
 .run(function($ionicPlatform, $cordovaGeolocation, $rootScope, $http, nycHealth, $ionicPopup, $ionicLoading) {
@@ -81,10 +83,10 @@ angular.module('starter', ['ionic',
     // Each state's controller can be found in controllers.js
     $stateProvider
         .state('tab', {
-        url: '/tab',
-        abstract: true,
-        templateUrl: 'templates/tabs.html'
-    })
+            url: '/tab',
+            abstract: true,
+            templateUrl: 'templates/tabs.html'
+        })
 
     // Each tab has its own nav history stack:
 
@@ -94,42 +96,108 @@ angular.module('starter', ['ionic',
             'tab-dash': {
                 templateUrl: 'templates/tab-dash.html',
                 controller: 'GradesCtrl',
-                // resolve: {
-                //     currentLocation: function($q, $cordovaGeolocation,  $ionicPopup) {
-                //         var q = $q.defer();
-                //         var latLong;
-                //         var posOptions = {
-                //             timeout: 100,
-                //             enableHighAccuracy: false
-                //         };
-                //         $cordovaGeolocation
-                //             .getCurrentPosition(posOptions)
-                //             .then(function(position) {
-                //                 var lat = position.coords.latitude
-                //                 var long = position.coords.longitude
-                //                 latLong = {
-                //                     'lat': lat,
-                //                     'long': long
-                //                 }
-                //                 q.resolve(latLong);
-                //             }, function(err) {
-                //                 latLong = null
-                //                 $ionicPopup.confirm({
-                //                         title: "Location Setting Turned Off",
-                //                         content: "Seems like your location settings are turned off. Please check your location setting!"
-                //                     })
-                //                     .then(function(result) {
-                //                         console.log(result)
-                //                         if (ionic.Platform.isAndroid()) {
-                //                             ionic.Platform.exitApp();
-                //                         }
-                //                         q.reject('Failed to Get Lat Long')
+                resolve: {
+                    currentLocation: function($q, $cordovaGeolocation, $ionicPopup, $ionicLoading, $localStorage) {
+                        console.log('hit resolve');
+                        $ionicLoading.show({
+                            template: 'Loading...',
+                            hideOnStateChange: true
+                        });
+                        var q = $q.defer();
+                        var storage = $localStorage;
+                        var latLong;
+                        var posOptions = {
+                            timeout: 1000,
+                            enableHighAccuracy: false
+                        };
+                        $cordovaGeolocation
+                            .getCurrentPosition(posOptions)
+                            .then(function(position) {
+                                var lat = position.coords.latitude
+                                var long = position.coords.longitude
+                                latLong = {
+                                    'lat': lat,
+                                    'long': long
+                                }
+                                $localStorage.setObject(
+                                    'latLong', latLong
+                                );
+                                q.resolve(latLong);
+                            }, function(err) {
+                                latLong = null
+                                var inStorage = $localStorage.getObject('latLong')
+                                var ifStoreage = inStorage.hasOwnProperty('lat')
+                                if (ifStoreage) {
+                                    console.log(ifStoreage)
+                                    var alertPopup = $ionicPopup.alert({
+                                        title: "Location Setting Turned Off",
+                                        template: 'Looks like your location settings are turned off, so City Grade will use your last known location. Please enable location setting to get the nearest restaurants.'
+                                    });
+                                    alertPopup.then(function(res) {
+                                        console.log('NO LOCATION');
+                                    });
+                                    q.resolve(inStorage);
+                                } else {
+                                    $ionicPopup.confirm({
+                                            title: "Location Setting Turned Off",
+                                            content: "Seems like your location settings are turned off. Please check your location setting!"
+                                        })
+                                        .then(function(result) {
+                                            console.log(result)
+                                            if (ionic.Platform.isAndroid()) {
+                                                ionic.Platform.exitApp();
+                                            }
+                                            q.reject('Failed to Get Lat Long')
 
-                //                     });
-                //             });
-                //         return q.promise;
-                //     }
-                // }
+                                        });
+                                };
+                                // navigator.geolocation.getCurrentPosition(function(pos) {
+                                //     console.log('Position=')
+                                //     console.log(pos);
+                                //     latLong = {
+                                //         'lat': pos.coords.latitude,
+                                //         'long': pos.coords.longitude
+                                //     }
+                                //     $localStorage.setObject(
+                                //         'latLong', latLong
+                                //     );
+                                //     q.resolve(latLong);
+
+                                // }, function(error) {
+                                //     console.log('Got error!');
+                                //     console.log(error);
+                                //     latLong = null
+                                //     if ($localStorage.getObject('latLong')) {
+                                //         var alertPopup = $ionicPopup.alert({
+                                //             title: "Location Setting Turned Off",
+                                //             template: 'Looks like your location settings are turned off, so City Grade will use your last known location. Please enable location setting to get the nearest restaurants.'
+                                //         });
+                                //         alertPopup.then(function(res) {
+                                //             console.log('NO LOCATION');
+                                //         });
+                                //         q.resolve($localStorage.getObject('latLong'));
+                                //     } else {
+                                //         $ionicPopup.confirm({
+                                //                 title: "Location Setting Turned Off",
+                                //                 content: "Seems like your location settings are turned off. Please check your location setting!"
+                                //             })
+                                //             .then(function(result) {
+                                //                 console.log(result)
+                                //                 if (ionic.Platform.isAndroid()) {
+                                //                     ionic.Platform.exitApp();
+                                //                 }
+                                //                 q.reject('Failed to Get Lat Long')
+
+                                //             });
+                                //     }
+
+                                // });
+
+                            });
+                        console.log($localStorage.getObject('latLong'))
+                        return q.promise;
+                    }
+                }
             }
         }
     })

@@ -1,12 +1,12 @@
 <ion-view view-title="City Grade">
     <ion-nav-bar class="bar-assertive">
         <ion-nav-buttons side="right">
-            <md-button aria-label="menu" id="focusItem" class="md-fab md-warn" ng-click="openFilter()">
+            <md-button aria-label="menu" id="focusItem" class="md-fab md-warn" on-tap="openFilter()">
                 <img src="images/food_icon.svg" style="width: 2em;margin-top: 26%;">
             </md-button>
         </ion-nav-buttons>
         <ion-nav-buttons side="left">
-            <md-button style="padding: 0;margin: 0;" ng-click="checkCurrentRepeat('location')" layout="row">
+            <md-button style="padding: 0;margin: 0;" on-tap="checkCurrentRepeat('location')" layout="row">
                 home
             </md-button>
         </ion-nav-buttons>
@@ -16,13 +16,13 @@
             <div layout="row" layout-align="space-between center">
                 <div flex="15">
                     <md-menu flex>
-                        <button ng-click="$mdOpenMenu($event)" class="button" style="background-color: transparent;border: 0;">
+                        <button on-tap="$mdOpenMenu($event)" class="button" style="background-color: transparent;border: 0;">
                             <i class="icon ion-navicon-round placeholder-icon" style="font-size: 31px;color: #e42012;"></i>
                         </button>
                         <md-menu-content width="6">
                             <md-menu-item>
                                 <div layout="row" layout-align="space-between center">
-                                    <md-button style="text-align: left;" flex="70" ng-click="setSearchInput('Name')">
+                                    <md-button style="text-align: left;" flex="70" on-tap="setSearchInput('Name')">
                                         <md-icon style="margin: 0;padding: 0;margin-top: -11px;font-size: 22px;color: #e42012;" md-menu-align-target class="icon ion-android-restaurant placeholder-icon"></md-icon>
                                         Restaurant Name
                                     </md-button>
@@ -33,7 +33,7 @@
                             </md-menu-item>
                             <md-menu-item>
                                 <div layout="row">
-                                    <md-button style="text-align: left;" flex="70" ng-click="setSearchInput('Phone #')">
+                                    <md-button style="text-align: left;" flex="70" on-tap="setSearchInput('Phone #')">
                                         <md-icon style="margin: 0;padding: 0;margin-top: -11px;font-size: 22px;color: #e42012;" md-menu-align-target class="icon ion-ios-telephone placeholder-icon"></md-icon>
                                         Restaurant Phone #
                                     </md-button>
@@ -52,7 +52,7 @@
                     </label>
                 </div>
                 <div flex="15" style="margin-left: 10px;">
-                    <button ng-click="inputSearch(SearchByInput, searchInputType)" class="button button-positive" ng-disabled="searchByText.$invalid">
+                    <button on-tap="inputSearch(SearchByInput, searchInputType)" class="button button-positive" ng-disabled="searchByText.$invalid">
                         <i class="icon ion-search placeholder-icon" style="font-size: 31px;color: white;"></i>
                     </button>
                 </div>
@@ -66,10 +66,10 @@
                     </md-tab-label>
                     <md-tab-body >
                     <md-content style="background-color: transparent;">
-                        <div ng-click="openSingleRestaurant(restaurant)" ng-show="restaurant.length !== 0 && showCurrentRepeat === 'location'" ng-repeat="restaurant in restaurantsArr | orderBy: 'restaurant[0].score' | limitTo: 50">
+                        <div on-tap="openSingleRestaurant(restaurant)" ng-show="restaurant.length !== 0 && showCurrentRepeat === 'location'" ng-repeat="restaurant in restaurantsArr | orderBy: 'restaurant[0].score' | limitTo: 50">
                             <basic-card></basic-card>
                         </div>
-                        <div ng-click="openSingleRestaurant(restaurant)" ng-show="restaurantsByFilter && showCurrentRepeat === 'filter'" ng-repeat="restaurant in restaurantsByFilter | orderBy: 'score'">
+                        <div on-tap="openSingleRestaurant(restaurant)" ng-show="restaurantsByFilter && showCurrentRepeat === 'filter'" ng-repeat="restaurant in restaurantsByFilter | orderBy: 'score'">
                             <basic-card></basic-card>
                         </div>
                     </md-content>
@@ -82,20 +82,20 @@
                     </md-tab-label>
                     <md-tab-body >
                     <md-content>
-                        <div ng-click="openSingleRestaurant(restaurant)" ng-show="restaurant.length !== 0 && showCurrentRepeat === 'location'" ng-repeat="restaurant in restaurantsArr | orderBy: 'restaurant[0].score'">
+                        <div on-tap="openSingleRestaurant(restaurant)" ng-show="restaurant.length !== 0 && showCurrentRepeat === 'location'" ng-repeat="restaurant in restaurantsArr | orderBy: 'restaurant[0].score'">
                             <basic-card></basic-card>
                         </div>
-                        <div ng-click="openSingleRestaurant(restaurant)" ng-show="restaurantsByFilter && showCurrentRepeat === 'filter'" ng-repeat="restaurant in restaurantsByFilter | orderBy: 'score'">
+                        <div on-tap="openSingleRestaurant(restaurant)" ng-show="restaurantsByFilter && showCurrentRepeat === 'filter'" ng-repeat="restaurant in restaurantsByFilter | orderBy: 'score'">
                             <basic-card></basic-card>
                         </div>
                         </md-content>
                     </md-tab-body> 
                 </md-tab>
             </md-tabs> -->
-            <div ng-click="openSingleRestaurant(restaurant)" ng-show="restaurant.length !== 0 && showCurrentRepeat === 'location'" ng-repeat="restaurant in restaurantsArr | orderBy: 'restaurant[0].score'">
+            <div on-tap="openSingleRestaurant(restaurant)" ng-show="restaurant.length !== 0 && showCurrentRepeat === 'location'" ng-repeat="restaurant in restaurantsArr track by $index | orderBy: 'restaurant[0].score'" ng-animate="'animate'">
                 <basic-card></basic-card>
             </div>
-            <div ng-click="openSingleRestaurant(restaurant)" ng-show="restaurantsByFilter && showCurrentRepeat === 'filter'" ng-repeat="restaurant in restaurantsByFilter | orderBy: 'score'">
+            <div on-tap="openSingleRestaurant(restaurant)" ng-show="restaurantsByFilter && showCurrentRepeat === 'filter'" ng-repeat="restaurant in restaurantsByFilter | orderBy: 'score'">
                 <basic-card></basic-card>
             </div>
         </div>

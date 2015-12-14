@@ -2,7 +2,9 @@
   "name": "CityGrade2",
   "version": "0.0.0",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "ngstorage": "^0.3.10"
+  },
   "devDependencies": {
     "grunt": "~0.4.5",
     "glob": "~4.3.5",
