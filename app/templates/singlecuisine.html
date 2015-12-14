@@ -1,11 +1,11 @@
 <ion-modal-view>
   <ion-header-bar align-title="center" class="bar-assertive">
     <div class="buttons">
-      <button class="button" ng-click="shareThisRes()">Share</button>
+      <button class="button" on-tap="shareThisRes()">Share</button>
     </div>
     <h1 class="title">{{currentRestaurant[0].dba}}</h1>
     <div class="buttons">
-      <button class="button" ng-click="closeSingleRestaurant()">Close</button>
+      <button class="button" on-tap="closeSingleRestaurant()">Close</button>
     </div>
   </ion-header-bar>
   <ion-content>

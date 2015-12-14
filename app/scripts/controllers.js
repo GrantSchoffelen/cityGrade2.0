@@ -189,7 +189,9 @@ angular.module('starter.controllers', [])
         })
     };
     $scope.shareThisRes = function() {
-        console.log($cordovaScreenshot.capture('share'))
+        $cordovaScreenshot.capture().then(function(uri) {
+            window.plugins.socialsharing.share(null, 'Android filename', uri, null)
+        })
     }
 
     // var watchOptions = {

@@ -4,16 +4,15 @@ angular.module('ionic.screenshot', [])
         capture: function (filename, extension, quality){
             extension = extension || 'jpg';
             quality = quality || '100';
-            debugger
             var defer = $q.defer();
 
-            navigator.screenshot.save(function (error, res){
+            navigator.screenshot.URI(function (error, res){
                 if (error) {
                     console.error(error);
                     defer.reject(error);
                 } else {
-                    console.log('screenshot saved in: ', res.filePath);
-                    defer.resolve(res.filePath);
+                    console.log('screenshot saved in: ', res.URI);
+                    defer.resolve(res.URI);
                 }
             }, extension, quality, filename);
 

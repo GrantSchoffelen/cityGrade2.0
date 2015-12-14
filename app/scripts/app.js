@@ -99,10 +99,10 @@ angular.module('starter', ['ionic',
                 resolve: {
                     currentLocation: function($q, $cordovaGeolocation, $ionicPopup, $ionicLoading, $localStorage) {
                         console.log('hit resolve');
-                        $ionicLoading.show({
-                            template: 'Loading...',
-                            hideOnStateChange: true
-                        });
+                        // $ionicLoading.show({
+                        //     template: 'Loading...',
+                        //     hideOnStateChange: true
+                        // });
                         var q = $q.defer();
                         var storage = $localStorage;
                         var latLong;
@@ -124,6 +124,13 @@ angular.module('starter', ['ionic',
                                 );
                                 q.resolve(latLong);
                             }, function(err) {
+                                 navigator.geolocation.getCurrentPosition(function() {
+                                    console.log('scuss')
+                                 }, function(err) {
+                                console.log(JSON.stringify(err), 'err in geting location')
+                                    
+                                 });
+                                console.log(JSON.stringify(err), 'err in geting location')
                                 latLong = null
                                 var inStorage = $localStorage.getObject('latLong')
                                 var ifStoreage = inStorage.hasOwnProperty('lat')
@@ -194,7 +201,7 @@ angular.module('starter', ['ionic',
                                 // });
 
                             });
-                        console.log($localStorage.getObject('latLong'))
+                        console.log(JSON.stringify($localStorage.getObject('latLong')) , 'lat lonf')
                         return q.promise;
                     }
                 }

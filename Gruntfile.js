@@ -224,7 +224,10 @@ module.exports = function (grunt) {
             '<%= yeoman.images %>/**/*.{png,jpg,jpeg,gif,webp,svg}',
             '*.html',
             'templates/**/*.html',
-            'fonts/*'
+            'fonts/*',
+            'scripts/googleplacesApi.js',
+            'bower_components/angularjs-google-places/dist/angularjs-google-places.min.js',
+            'scripts/basicCard/basicCard.html'
           ]
         }, {
           expand: true,
