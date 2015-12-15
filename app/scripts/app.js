@@ -79,7 +79,7 @@ angular.module('starter', ['ionic',
 
 .config(function($stateProvider, $urlRouterProvider, cfpLoadingBarProvider, ChartJsProvider) {
     ChartJsProvider.setOptions({
-      colours: ['#FF5252', '#FF8A80'],
+      colours: ['#B8212D', '#FF8A80'],
       responsive: false,
     });
     // Ionic uses AngularUI Router which uses the concept of states
