@@ -199,7 +199,8 @@ angular.module('starter.controllers', [])
     };
     $scope.shareThisRes = function() {
         $cordovaScreenshot.capture().then(function(uri) {
-            window.plugins.socialsharing.share(null, 'Android filename', uri, null)
+            //message, subject, file, link
+            window.plugins.socialsharing.share('Hey checkout this restaurant!', $scope.currentRestaurant[0].dba + '\'s Grade', uri, null)
         })
     }
     $scope.getChartData = function(current) {

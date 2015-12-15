@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.stackers.CityGrade2" version="0.1.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.stackers.CityGrade2" version="0.1.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>City Grade</name>
   <description>
             City Grade lets you know the truth behind NYC restaurant health grades. Even if you see a window with an A, mice may be infesting and undercooked food being served. City Grade lets you know where NOT to eat! Want to know your favorite restaurant's darkest secrets? Download City Grade now!
@@ -27,6 +27,7 @@
     <icon src="resources/android/icon/drawable-hdpi-icon.png" density="hdpi"/>
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" density="xhdpi"/>
     <icon src="resources/android/icon/drawable-xxhdpi-icon.png" density="xxhdpi"/>
+    <icon src="resources/android/icon/drawable-xxxhdpi-icon.png" density="xxxhdpi"/>
   </platform>
   <platform name="ios">
     <splash src="resources/ios/splash/Default-568h@2x~iphone.png" width="640" height="1136"/>
