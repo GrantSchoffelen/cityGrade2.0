@@ -11,7 +11,9 @@ angular.module('starter.controllers', [])
     $ionicModal,
     $mdToast,
     $ionicPopup,
-    $cordovaScreenshot) {
+    $cordovaScreenshot,
+    lodash,
+    $filter) {
     console.log(currentLocation, 'here is the current location')
     $rootScope.lat = currentLocation.lat;
     $rootScope.long = currentLocation.long;
@@ -34,6 +36,7 @@ angular.module('starter.controllers', [])
     $scope.openSingleRestaurant = function(restaurant) {
         console.log($scope.currentRestaurant, restaurant);
         $scope.currentRestaurant = restaurant;
+        $scope.getChartData($scope.currentRestaurant)
         $scope.singleRestaurant.show();
     };
     $scope.closeSingleRestaurant = function() {
@@ -121,7 +124,9 @@ angular.module('starter.controllers', [])
                         $scope.cuisineArr.push(key[0]);
                     })
                 });
-                console.log($scope.cuisineArr)
+                angular.forEach($scope.restaurantsArr, function(key, val) {
+                    $scope.restaurantsArr[val] = $filter('orderBy')(key, '-inspection_date');
+                });
             })
         })
         nycHealth.localRestraunts(lat, long).then(function(rests) {
@@ -131,7 +136,10 @@ angular.module('starter.controllers', [])
                         $rootScope.userZipcode = rest.formatted_address.match(/[0-9]{5}/g);
                     }
                     nycHealth.healthDataByPhone(rest).then(function(grade) {
-                        $scope.restaurantsArr.unshift(grade);
+                        $scope.restaurantsArr.push(grade);
+                        angular.forEach($scope.restaurantsArr, function(key, val) {
+                            $scope.restaurantsArr[val] = $filter('orderBy')(key, '-inspection_date');
+                        });
                     })
                 });
             });
@@ -171,6 +179,7 @@ angular.module('starter.controllers', [])
         name: 'Turkish',
         image: 'images/thai.png'
     }]
+
     $scope.getLocationsByCuisine = function(cuisine) {
         $scope.restaurantsByCuisine = [];
         nycHealth.healthDataByCuisine(cuisine, $rootScope.userZipcode).then(function(grades) {
@@ -193,7 +202,27 @@ angular.module('starter.controllers', [])
             window.plugins.socialsharing.share(null, 'Android filename', uri, null)
         })
     }
+    $scope.getChartData = function(current) {
+        $scope.labels = [];
+        $scope.chartData = [
+            []
+        ];
+        angular.forEach(current, function(key, val) {
+            if (key.score !== undefined) {
+                var length = $scope.chartData[0].length;
+        console.log($scope.chartData[0][length -1])
 
+                if (Number(key.score) !== $scope.chartData[0][length -1]) {
+                    $scope.chartData[0].push(Number(key.score));
+                    var grade;
+                    grade = key.score <= 13 ? 'A' : undefined;
+                    grade = key.score > 13 && key.score <= 27 ? 'B' : grade;
+                    grade = key.score > 27 ? 'C' : grade;
+                    $scope.labels.push(grade)
+                }
+            }
+        })
+    };
     // var watchOptions = {
     //     frequency: 2000,
     //     timeout: 3000,

@@ -17,7 +17,9 @@ angular.module('starter', ['ionic',
     'angular.filter',
     'ng-walkthrough',
     'ionic.utils',
-    'ionic.screenshot'
+    'ionic.screenshot',
+    'ngLodash',
+    'chart.js'
 ])
 
 .run(function($ionicPlatform, $cordovaGeolocation, $rootScope, $http, nycHealth, $ionicPopup, $ionicLoading) {
@@ -75,8 +77,11 @@ angular.module('starter', ['ionic',
 })
 
 
-.config(function($stateProvider, $urlRouterProvider, cfpLoadingBarProvider) {
-
+.config(function($stateProvider, $urlRouterProvider, cfpLoadingBarProvider, ChartJsProvider) {
+    ChartJsProvider.setOptions({
+      colours: ['#FF5252', '#FF8A80'],
+      responsive: false,
+    });
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
     // Set up the various states which the app can be in.

@@ -17,13 +17,17 @@
 }
 
 .scroll-content {
-/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f6f8f9+0,a36b6a+100,f5f7f9+100,a53331+100 */
-background: rgb(246,248,249); /* Old browsers */
-background: -moz-linear-gradient(-45deg,  rgba(246,248,249,1) 0%, rgba(163,107,106,1) 100%, rgba(245,247,249,1) 100%, rgba(165,51,49,1) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(-45deg,  rgba(246,248,249,1) 0%,rgba(163,107,106,1) 100%,rgba(245,247,249,1) 100%,rgba(165,51,49,1) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(135deg,  rgba(246,248,249,1) 0%,rgba(163,107,106,1) 100%,rgba(245,247,249,1) 100%,rgba(165,51,49,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', endColorstr='#a53331',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f6f8f9+0,a36b6a+100,f5f7f9+100,a53331+100 */
+    background: rgb(246, 248, 249);
+    /* Old browsers */
+    background: -moz-linear-gradient(-45deg, rgba(246, 248, 249, 1) 0%, rgba(163, 107, 106, 1) 100%, rgba(245, 247, 249, 1) 100%, rgba(165, 51, 49, 1) 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, rgba(246, 248, 249, 1) 0%, rgba(163, 107, 106, 1) 100%, rgba(245, 247, 249, 1) 100%, rgba(165, 51, 49, 1) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, rgba(246, 248, 249, 1) 0%, rgba(163, 107, 106, 1) 100%, rgba(245, 247, 249, 1) 100%, rgba(165, 51, 49, 1) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', endColorstr='#a53331', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
     /*background-image: url('/../images/background.png');*/
 }
 
@@ -50,6 +54,43 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', end
 .list .item.item-accordion.ng-hide-remove {
     display: block !important;
 }
+
 md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
-        min-height: 70vh;
+    min-height: 70vh;
+}
+
+.chart-line {
+    height: 108px;
+    width: 90vw;
+}
+
+.my-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.my-container canvas {
+    /*padding: 200px;*/
+    height: 108px;
+    width: 90vw;
+    position: relative;
+    z-index: 2;
+    margin-left: 2%;
+}
+
+.my-container h5 {
+    margin-left: 24vh;
+    margin-top: 1px;
+    position: absolute;
+    z-index: 3;
+    text-align: center;
+}
+
+.my-container img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    opacity: 0.5;
 }
